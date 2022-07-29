@@ -1,12 +1,3 @@
-@mixin random-bgr() {
-  fill: rgb(random(255), random(255), random(255));
-}
-
-.car {
-  @include random-bgr();
-  transform: translateX(0px);
-}
-
 .finish {
   width: 50px;
 }
