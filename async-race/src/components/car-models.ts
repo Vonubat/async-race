@@ -1,4 +1,4 @@
-const carModel = [
+const carModel: Readonly<string[]> = [
   'Durango',
   'Ram',
   'Challenger',
@@ -58,3 +58,5 @@ const carModel = [
   'Creta',
   'Solaris',
 ];
+
+export default carModel;
