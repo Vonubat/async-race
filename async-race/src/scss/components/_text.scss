@@ -1,0 +1,21 @@
+@mixin text {
+  color: whitesmoke;
+  display: block;
+}
+
+.page-name {
+  font-size: 30px;
+  font-weight: 700;
+  @include text();
+}
+
+.page-counter {
+  font-size: 25px;
+  font-weight: 500;
+  @include text();
+}
+
+.car-name {
+  font-size: 15px;
+  color: sandybrown;
+}
