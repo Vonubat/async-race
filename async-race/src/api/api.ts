@@ -17,20 +17,6 @@ import {
   GetSortOrderFn,
 } from '../types/types';
 
-export const getCars: GetCarsFn = async (page: number, limit = 10): Promise<CarsResponse> => {
-  const response: Response = await fetch(`${garage}?_page=${page}&_limit=${limit}`);
-  const count: string | null = response.headers.get('X-Total-Count');
-
-  if (!count) {
-    throw new Error('X-Total-Count is null');
-  }
-
-  return {
-    items: await response.json(),
-    count,
-  };
-};
-
 export const getCar: GetCarFn = async (id: number): Promise<Car> => (await fetch(`${garage}/${id}`)).json();
 
 export const createCar: CreateCarFn = async (body: Body): Promise<Car> =>

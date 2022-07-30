@@ -1,26 +1,16 @@
+// color type
 type RGB = `rgb(${number}, ${number}, ${number})`;
 type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
 type HEX = `#${string}`;
 export type Color = RGB | RGBA | HEX;
 
-export interface Car {
-  name: string;
-  color: Color;
-  id: number;
-}
-
+// response interface
 export interface CarsResponse {
   items: Car[];
   count: string;
 }
-
 export interface DriveResponse {
   success: true | false;
-}
-
-export interface Body {
-  name: string;
-  color: Color;
 }
 
 export interface EngineResponse {
@@ -28,10 +18,24 @@ export interface EngineResponse {
   distance: number;
 }
 
+// data interface
+export interface Body {
+  name: string;
+  color: Color;
+}
+
+export interface Car {
+  name: string;
+  color: Color;
+  id: number;
+}
+
+// param types
 export type Status = 'started' | 'stopped';
 export type Sort = 'id' | 'wins' | 'time';
 export type Order = 'ASC' | 'DESC';
 
+// function interface
 export interface GetCarFn {
   (id: number): Promise<Car>;
 }
