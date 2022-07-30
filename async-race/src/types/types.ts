@@ -97,3 +97,7 @@ export interface GetWinnersFn {
 export interface GetWinnerFn {
   (id: number): Promise<Winner>;
 }
+
+export interface GetWinnerStatusFn {
+  (id: number): Promise<number>;
+}

@@ -1,5 +1,3 @@
-export const getWinnerStatus = async (id) => (await fetch(`${winners}/${id}`)).status;
-
 export const deleteWinner = async (id) => (await fetch(`${winners}/${id}`, { method: 'DELETE' })).json();
 
 export const createWinner = async (body) =>
