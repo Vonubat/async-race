@@ -17,12 +17,6 @@ import {
   GetSortOrderFn,
 } from '../types/types';
 
-const base = 'http://localhost:3000';
-
-const garage = `${base}/garage`;
-const engine = `${base}/engine`;
-const winners = `${base}/winners`;
-
 export const getCars: GetCarsFn = async (page: number, limit = 10): Promise<CarsResponse> => {
   const response: Response = await fetch(`${garage}?_page=${page}&_limit=${limit}`);
   const count: string | null = response.headers.get('X-Total-Count');
