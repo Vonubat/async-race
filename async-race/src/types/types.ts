@@ -125,5 +125,5 @@ export interface GetRandomColorFn {
 }
 
 export interface GetRandomCarNameFn {
-  (makes: typeof carMake, models: typeof carModel): CarName;
+  (): CarName;
 }
