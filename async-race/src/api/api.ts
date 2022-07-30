@@ -17,8 +17,6 @@ import {
   GetSortOrderFn,
 } from '../types/types';
 
-export const getCar: GetCarFn = async (id: number): Promise<Car> => (await fetch(`${garage}/${id}`)).json();
-
 export const createCar: CreateCarFn = async (body: Body): Promise<Car> =>
   (
     await fetch(garage, {
