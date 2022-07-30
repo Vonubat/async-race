@@ -1,8 +1,14 @@
+import carMake from '../components/car-makes';
+import carModel from '../components/car-models';
+
 // color type
 type RGB = `rgb(${number}, ${number}, ${number})`;
 type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
 type HEX = `#${string}`;
 export type Color = RGB | RGBA | HEX;
+
+// car name type
+export type CarName = `${typeof carMake[number]} ${typeof carModel[number]}`;
 
 // response interface
 export interface CarsResponse {
@@ -112,4 +118,12 @@ export interface CreateWinnerFn {
 
 export interface UpdateWinnerFn {
   (body: Winner): Promise<Winner>;
+}
+
+export interface GetRandomColorFn {
+  (): Color;
+}
+
+export interface GetRandomCarNameFn {
+  (makes: typeof carMake, models: typeof carModel): CarName;
 }
