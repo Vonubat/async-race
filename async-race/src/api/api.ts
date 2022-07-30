@@ -17,20 +17,6 @@ import {
   GetSortOrderFn,
 } from '../types/types';
 
-export const updateCar: UpdateCarFn = async (id: number, body: Body): Promise<Car> =>
-  (
-    await fetch(`${garage}/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-  ).json();
-
-export const controlEngine: ControlEngineFn = async (id: number, status: Status): Promise<EngineResponse> =>
-  (await fetch(`${engine}?id=${id}&status-${status}`)).json();
-
 export const drive: DriveFn = async (id: number): Promise<DriveResponse> => {
   const res: Response = await fetch(`${engine}&id=${id}&status=drive`).catch();
   return res.status !== 200 ? { success: false } : { ...(await res.json()) };
