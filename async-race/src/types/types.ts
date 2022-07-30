@@ -101,3 +101,7 @@ export interface GetWinnerFn {
 export interface GetWinnerStatusFn {
   (id: number): Promise<number>;
 }
+
+export interface DeleteWinnersFn {
+  (id: number): Promise<void>;
+}
