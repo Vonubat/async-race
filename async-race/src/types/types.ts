@@ -105,3 +105,7 @@ export interface GetWinnerStatusFn {
 export interface DeleteWinnersFn {
   (id: number): Promise<void>;
 }
+
+export interface CreateWinnersFn {
+  (body: Winner): Promise<Winner>;
+}

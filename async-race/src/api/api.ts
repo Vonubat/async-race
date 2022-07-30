@@ -1,14 +1,3 @@
-export const createWinner = async (body) =>
-  (
-    await fetch(winners, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-  ).json();
-
 export const updateWinner = async (id, body) =>
   (
     await fetch(`${winners}/${id}`, {
