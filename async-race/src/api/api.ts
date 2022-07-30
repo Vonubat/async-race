@@ -1,29 +1,3 @@
-import {
-  CarsResponse,
-  Car,
-  GetCarFn,
-  GetCarsFn,
-  CreateCarFn,
-  DeleteCarFn,
-  Body,
-  UpdateCarFn,
-  EngineResponse,
-  Status,
-  ControlEngineFn,
-  DriveFn,
-  DriveResponse,
-  Sort,
-  Order,
-  GetSortOrderFn,
-} from '../types/types';
-
-export const getSortOrder: GetSortOrderFn = (sort: Sort, order: Order): string => {
-  if (sort && order) {
-    return `&_sort=${sort}&_order=${order}`;
-  }
-  return '';
-};
-
 export const getWinners = async ({ page, limit = 10, sort, order }) => {
   const response: Response = await fetch(`${winners}?_page=${page}&_limit=${limit}${getSortOrder(sort, order)}`);
   const items = await response.json();
