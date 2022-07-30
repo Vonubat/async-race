@@ -17,11 +17,6 @@ import {
   GetSortOrderFn,
 } from '../types/types';
 
-export const drive: DriveFn = async (id: number): Promise<DriveResponse> => {
-  const res: Response = await fetch(`${engine}&id=${id}&status=drive`).catch();
-  return res.status !== 200 ? { success: false } : { ...(await res.json()) };
-};
-
 export const getSortOrder: GetSortOrderFn = (sort: Sort, order: Order): string => {
   if (sort && order) {
     return `&_sort=${sort}&_order=${order}`;
