@@ -17,17 +17,6 @@ import {
   GetSortOrderFn,
 } from '../types/types';
 
-export const createCar: CreateCarFn = async (body: Body): Promise<Car> =>
-  (
-    await fetch(garage, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-  ).json();
-
 export const deletetCar: DeleteCarFn = async (id: number): Promise<void> =>
   (await fetch(`${garage}/${id}`, { method: 'DELETE' })).json();
 
