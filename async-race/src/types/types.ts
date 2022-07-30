@@ -11,7 +11,7 @@ export interface CarsResponse {
 }
 
 export interface WinnersResponse {
-  items: Winner[];
+  items: WinnerAndCar[];
   count: string;
 }
 export interface DriveResponse {
@@ -92,4 +92,8 @@ export interface GetSortOrderFn {
 
 export interface GetWinnersFn {
   (WinnerParam: WinnerParam): Promise<WinnersResponse>;
+}
+
+export interface GetWinnerFn {
+  (id: number): Promise<Winner>;
 }
