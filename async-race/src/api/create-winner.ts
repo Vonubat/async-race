@@ -1,7 +1,7 @@
-import { CreateWinnersFn, Winner } from '../types/types';
+import { CreateWinnerFn, Winner } from '../types/types';
 import { winners } from './path';
 
-const createWinner: CreateWinnersFn = async (body: Winner): Promise<Winner> =>
+const createWinner: CreateWinnerFn = async (body: Winner): Promise<Winner> =>
   (
     await fetch(winners, {
       method: 'POST',

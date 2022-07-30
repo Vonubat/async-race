@@ -1,14 +1,3 @@
-export const updateWinner = async (id, body) =>
-  (
-    await fetch(`${winners}/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-  ).json();
-
 export const saveWinner = async ({ id, time }) => {
   const winnerStatus = await getWinnerStatus(id);
 

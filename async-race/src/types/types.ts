@@ -102,10 +102,14 @@ export interface GetWinnerStatusFn {
   (id: number): Promise<number>;
 }
 
-export interface DeleteWinnersFn {
+export interface DeleteWinnerFn {
   (id: number): Promise<void>;
 }
 
-export interface CreateWinnersFn {
+export interface CreateWinnerFn {
+  (body: Winner): Promise<Winner>;
+}
+
+export interface UpdateWinnerFn {
   (body: Winner): Promise<Winner>;
 }
