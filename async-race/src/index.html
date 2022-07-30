@@ -11,63 +11,71 @@
     <title>Async race</title>
   </head>
   <body>
-    <header>
-      <nav>
-        <button class="button disabled">TO GARAGE</button>
+    <header class="header">
+      <nav class="nav">
+        <button class="button">TO GARAGE</button>
         <button class="button">TO WINNERS</button>
       </nav>
     </header>
     <section class="garage" id="garage">
-      <div class="create-car">
-        <input type="text" class="disabled" /><input type="color" id="head" name="head" value="#e66465" /><button
-          class="button"
-        >
-          CREATE
-        </button>
-      </div>
-      <div class="update-car">
-        <input type="text" /><input type="color" id="head" name="head" value="#e66465" /><button class="button">
-          UPDATE
-        </button>
-      </div>
-      <div class="race-controls">
-        <button class="button">RACE</button>
-        <button class="button">RESET</button>
-        <button class="button">GENERATE CARS</button>
+      <div class="menu">
+        <div class="create-car">
+          <input type="text" class="" /><input type="color" id="head" name="head" value="#e66465" /><button
+            class="button"
+          >
+            CREATE
+          </button>
+        </div>
+        <div class="update-car">
+          <input type="text" /><input type="color" id="head" name="head" value="#e66465" /><button class="button">
+            UPDATE
+          </button>
+        </div>
+        <div class="race-controls">
+          <button class="button">RACE</button>
+          <button class="button">RESET</button>
+          <button class="button">GENERATE CARS</button>
+        </div>
       </div>
       <span class="page-name text">Garage [4]</span>
       <span class="page-counter text">Page #1</span>
       <div class="track-container">
         <div class="track">
-          <div class="car-manipulation">
-            <button class="button">SELECT</button>
-            <button class="button">REMOVE</button>
+          <div class="controls-container">
+            <div class="car-manipulation">
+              <button class="button">SELECT</button>
+              <button class="button">REMOVE</button>
+            </div>
+            <div class="engine-control">
+              <button class="start">START</button>
+              <button class="stop">STOP</button>
+            </div>
             <span class="car-name">Tesla</span>
           </div>
-          <div class="engine-contol">
-            <button class="start">START</button>
-            <button class="stop">STOP</button>
-          </div>
-          <svg class="icon">
-            <use xlink:href="./assets/sprite.svg#car-01"></use>
-          </svg>
-          <svg class="icon">
+          <div class="track-layout">
+            <svg class="car">
+              <use xlink:href="./assets/sprite.svg#car-01"></use>
+            </svg>
+            <!-- <svg class="car">
             <use xlink:href="./assets/sprite.svg#car-02"></use>
           </svg>
-          <svg class="icon">
+          <svg class="car">
             <use xlink:href="./assets/sprite.svg#car-03"></use>
           </svg>
-          <svg class="icon">
+          <svg class="car">
             <use xlink:href="./assets/sprite.svg#car-04"></use>
-          </svg>
-          <img class="finish" src="./assets/finish.png" alt="" />
+          </svg> -->
+            <img class="finish" src="./assets/finish.png" alt="" />
+          </div>
         </div>
       </div>
-      <button class="button">PREV</button>
-      <button class="button">NEXT</button>
+      <div class="pagination-garage">
+        <button class="button">PREV</button>
+        <button class="button">NEXT</button>
+      </div>
     </section>
     <section class="winners" id="winners">
-      <span class="page-name text">Garage [4]</span>
+      <span class="page-name text">Winners [4]</span>
       <span class="page-counter text">Page #1</span>
       <table class="table" id="table">
         <tbody>

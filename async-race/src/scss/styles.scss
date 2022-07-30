@@ -3,8 +3,9 @@
 @import './components/text';
 @import './components/images';
 @import './components/table';
+@import './layouts/header';
 @import './pages/garage';
-@import './pages/winners.scss';
+@import './pages/winners';
 
 html {
   scroll-behavior: smooth;
