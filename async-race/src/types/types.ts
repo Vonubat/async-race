@@ -9,6 +9,11 @@ export interface CarsResponse {
   items: Car[];
   count: string;
 }
+
+export interface WinnersResponse {
+  items: Winner[];
+  count: string;
+}
 export interface DriveResponse {
   success: true | false;
 }
@@ -28,6 +33,23 @@ export interface Car {
   name: string;
   color: Color;
   id: number;
+}
+
+export interface Winner {
+  id: number;
+  wins: number;
+  time: number;
+}
+
+export interface WinnerAndCar extends Winner {
+  car: Car;
+}
+
+export interface WinnerParam {
+  page: number;
+  limit: number;
+  sort: Sort;
+  order: Order;
 }
 
 // param types
@@ -66,4 +88,8 @@ export interface DriveFn {
 
 export interface GetSortOrderFn {
   (sort: Sort, order: Order): string;
+}
+
+export interface GetWinnersFn {
+  (WinnerParam: WinnerParam): Promise<WinnersResponse>;
 }

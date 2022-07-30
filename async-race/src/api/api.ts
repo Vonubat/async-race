@@ -1,18 +1,3 @@
-export const getWinners = async ({ page, limit = 10, sort, order }) => {
-  const response: Response = await fetch(`${winners}?_page=${page}&_limit=${limit}${getSortOrder(sort, order)}`);
-  const items = await response.json();
-  const count: string | null = response.headers.get('X-Total-Count');
-
-  if (!count) {
-    throw new Error('X-Total-Count is null');
-  }
-
-  return {
-    items: await Promise.all(items.map(async (winner) => ({ ...winner, car: await getCar(winner.id) }))),
-    count,
-  };
-};
-
 export const getWinner = async (id) => (await fetch(`${winners}/${id}`)).json();
 
 export const getWinnerStatus = async (id) => (await fetch(`${winners}/${id}`)).status;
