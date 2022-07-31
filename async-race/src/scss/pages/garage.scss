@@ -40,12 +40,9 @@
   .track-layout {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     .finish {
       margin-right: 50px;
     }
   }
-}
-
-.pagination-garage {
-  margin-top: 30px;
 }

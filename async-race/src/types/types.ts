@@ -36,7 +36,7 @@ export interface Body {
 }
 
 export interface Car {
-  name: string;
+  name: CarName;
   color: Color;
   id: number;
 }
