@@ -1,7 +1,7 @@
 import { DeleteCarFn } from '../types/types';
-import { garage } from './path';
+import { GARAGE } from './variables';
 
 const deletetCar: DeleteCarFn = async (id: number): Promise<void> =>
-  (await fetch(`${garage}/${id}`, { method: 'DELETE' })).json();
+  (await fetch(`${GARAGE}/${id}`, { method: 'DELETE' })).json();
 
 export default deletetCar;

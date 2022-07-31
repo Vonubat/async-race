@@ -1,9 +1,9 @@
 import { Car, UpdateCarFn, Body } from '../types/types';
-import { garage } from './path';
+import { GARAGE } from './variables';
 
 const updateCar: UpdateCarFn = async (id: number, body: Body): Promise<Car> =>
   (
-    await fetch(`${garage}/${id}`, {
+    await fetch(`${GARAGE}/${id}`, {
       method: 'PUT',
       body: JSON.stringify(body),
       headers: {

@@ -1,7 +1,7 @@
 import { DeleteWinnerFn } from '../types/types';
-import { winners } from './path';
+import { WINNERS } from './variables';
 
 const deleteWinner: DeleteWinnerFn = async (id: number): Promise<void> =>
-  (await fetch(`${winners}/${id}`, { method: 'DELETE' })).json();
+  (await fetch(`${WINNERS}/${id}`, { method: 'DELETE' })).json();
 
 export default deleteWinner;

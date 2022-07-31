@@ -20,29 +20,31 @@
   margin-top: 10px;
 }
 
-.track {
-  margin-top: 20px;
-  border-bottom: 5px dashed white;
+.track-container {
+  .track {
+    margin-top: 20px;
+    border-bottom: 5px dashed white;
 
-  .controls-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    .car-manipulation,
-    .engine-control {
+    .controls-container {
       display: flex;
-      flex-direction: column;
-      width: 75px;
-      gap: 5px;
+      align-items: center;
+      gap: 15px;
+      .car-manipulation,
+      .engine-control {
+        display: flex;
+        flex-direction: column;
+        width: 75px;
+        gap: 5px;
+      }
     }
-  }
 
-  .track-layout {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    .finish {
-      margin-right: 50px;
+    .track-layout {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      .finish {
+        margin-right: 50px;
+      }
     }
   }
 }

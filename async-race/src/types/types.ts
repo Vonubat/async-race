@@ -53,7 +53,6 @@ export interface WinnerAndCar extends Winner {
 
 export interface WinnerParam {
   page: number;
-  limit: number;
   sort: Sort;
   order: Order;
 }
@@ -69,7 +68,7 @@ export interface GetCarFn {
 }
 
 export interface GetCarsFn {
-  (page: number, limit: number): Promise<CarsResponse>;
+  (page: number): Promise<CarsResponse>;
 }
 
 export interface CreateCarFn {

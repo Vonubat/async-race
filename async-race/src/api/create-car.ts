@@ -1,9 +1,9 @@
 import { Car, CreateCarFn, Body } from '../types/types';
-import { garage } from './path';
+import { GARAGE } from './variables';
 
 const createCar: CreateCarFn = async (body: Body): Promise<Car> =>
   (
-    await fetch(garage, {
+    await fetch(GARAGE, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {

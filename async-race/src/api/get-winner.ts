@@ -1,6 +1,6 @@
 import { GetWinnerFn, Winner } from '../types/types';
-import { winners } from './path';
+import { WINNERS } from './variables';
 
-const getWinner: GetWinnerFn = async (id: number): Promise<Winner> => (await fetch(`${winners}/${id}`)).json();
+const getWinner: GetWinnerFn = async (id: number): Promise<Winner> => (await fetch(`${WINNERS}/${id}`)).json();
 
 export default getWinner;

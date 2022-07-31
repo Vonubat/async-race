@@ -127,8 +127,8 @@ const generateTrack: (car: Car) => HTMLDivElement = (car: Car): HTMLDivElement =
 };
 
 const generateAllTracks: () => Promise<HTMLDivElement> = async (): Promise<HTMLDivElement> => {
+  const cars: CarsResponse = await getCars(1);
   const allTrackGeneration: HTMLDivElement = createTrackContainer();
-  const cars: CarsResponse = await getCars(1, 5);
   cars.items.forEach((item) => {
     allTrackGeneration.append(generateTrack(item));
   });

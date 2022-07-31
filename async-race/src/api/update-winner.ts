@@ -1,9 +1,9 @@
 import { UpdateWinnerFn, Winner } from '../types/types';
-import { winners } from './path';
+import { WINNERS } from './variables';
 
 const updateWinner: UpdateWinnerFn = async (body: Winner): Promise<Winner> =>
   (
-    await fetch(`${winners}/${body.id}`, {
+    await fetch(`${WINNERS}/${body.id}`, {
       method: 'PUT',
       body: JSON.stringify(body),
       headers: {
