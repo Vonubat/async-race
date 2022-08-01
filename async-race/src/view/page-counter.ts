@@ -1,14 +1,21 @@
 import { Page } from '../types/types';
+import calculatePageCounter from '../utilities/page-counter';
 
-const createPageCounter: (counter: number, page: Page) => HTMLSpanElement = (
-  counter: number,
-  page: Page
-): HTMLSpanElement => {
+export const createPageCounter: (page: Page) => HTMLSpanElement = (page: Page): HTMLSpanElement => {
   const pageCounter: HTMLSpanElement = document.createElement('span');
   pageCounter.classList.add('page-counter', 'text');
   pageCounter.id = `page-counter-${page.toLocaleLowerCase()}`;
-  pageCounter.innerText = `$Page #${counter}`;
+  pageCounter.innerText = `$Page #1`;
   return pageCounter;
 };
 
-export default createPageCounter;
+export const updatePageCounter: (page: Page) => HTMLSpanElement = (page: Page): HTMLSpanElement => {
+  const pageCounter: HTMLSpanElement | null = document.getElementById(`page-counter-${page.toLocaleLowerCase()}`);
+
+  if (!pageCounter) {
+    throw new Error("pageCounterElement doesn't exist");
+  }
+
+  pageCounter.innerText = `$Page #${calculatePageCounter(page)}`;
+  return pageCounter;
+};
