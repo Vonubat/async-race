@@ -61,6 +61,7 @@ export interface WinnerParam {
 export type Status = 'started' | 'stopped';
 export type Sort = 'id' | 'wins' | 'time';
 export type Order = 'ASC' | 'DESC';
+export type Page = 'Garage' | 'Winners';
 
 // function interface
 export interface GetCarFn {

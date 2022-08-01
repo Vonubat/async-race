@@ -1,10 +1,13 @@
-import { CarsResponse } from '../types/types';
+import { CarsResponse, Page } from '../types/types';
 
-const createPageName: (value: CarsResponse) => HTMLSpanElement = (value: CarsResponse): HTMLSpanElement => {
+const createPageName: (value: CarsResponse, page: Page) => HTMLSpanElement = (
+  value: CarsResponse,
+  page: Page
+): HTMLSpanElement => {
   const pageName: HTMLSpanElement = document.createElement('span');
   pageName.classList.add('page-name', 'text');
   pageName.id = 'page-name-garage';
-  pageName.innerText = `Garage [${value.count}]`;
+  pageName.innerText = `${page} [${value.count}]`;
   return pageName;
 };
 
