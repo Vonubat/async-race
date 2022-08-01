@@ -6,7 +6,7 @@ const createPageName: (value: CarsResponse, page: Page) => HTMLSpanElement = (
 ): HTMLSpanElement => {
   const pageName: HTMLSpanElement = document.createElement('span');
   pageName.classList.add('page-name', 'text');
-  pageName.id = 'page-name-garage';
+  pageName.id = `page-name-${page.toLocaleLowerCase()}`;
   pageName.innerText = `${page} [${value.count}]`;
   return pageName;
 };
