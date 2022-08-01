@@ -1,8 +1,8 @@
 import { CarsResponse, GetCarsFn } from '../types/types';
-import { GARAGE, limit } from './variables';
+import { GARAGE, GARAGE_LIMIT } from './variables';
 
-const getCars: GetCarsFn = async (page: number): Promise<CarsResponse> => {
-  const response: Response = await fetch(`${GARAGE}?_page=${page}&_limit=${limit}`);
+const getCars: GetCarsFn = async (pageNumber: number): Promise<CarsResponse> => {
+  const response: Response = await fetch(`${GARAGE}?_page=${pageNumber}&_limit=${GARAGE_LIMIT}`);
   const count: string | null = response.headers.get('X-Total-Count');
 
   if (!count) {

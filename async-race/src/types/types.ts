@@ -52,7 +52,7 @@ export interface WinnerAndCar extends Winner {
 }
 
 export interface WinnerParam {
-  page: number;
+  pageNumber: number;
   sort: Sort;
   order: Order;
 }
