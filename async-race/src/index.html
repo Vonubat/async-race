@@ -13,28 +13,32 @@
   <body>
     <header class="header">
       <nav class="nav">
-        <button class="button">TO GARAGE</button>
-        <button class="button">TO WINNERS</button>
+        <button class="button" id="to-garage">TO GARAGE</button>
+        <button class="button" id="to-winners">TO WINNERS</button>
       </nav>
     </header>
     <section class="garage" id="garage">
       <div class="menu">
         <div class="create-car">
-          <input type="text" class="" /><input type="color" id="head" name="head" value="#e66465" /><button
-            class="button"
-          >
-            CREATE
-          </button>
+          <input type="text" class="create-text" id="create-text" /><input
+            type="color"
+            id="create-color"
+            name="create-color"
+            value="#FFFFFF"
+          /><button class="button" id="create-btn">CREATE</button>
         </div>
         <div class="update-car">
-          <input type="text" /><input type="color" id="head" name="head" value="#e66465" /><button class="button">
-            UPDATE
-          </button>
+          <input type="text" class="update-text" id="update-text" /><input
+            type="color"
+            id="update-color"
+            name="update-color"
+            value="#FFFFFF"
+          /><button class="button" id="update-btn">UPDATE</button>
         </div>
         <div class="race-controls">
-          <button class="button">RACE</button>
-          <button class="button">RESET</button>
-          <button class="button">GENERATE CARS</button>
+          <button class="button" id="race">RACE</button>
+          <button class="button" id="reset">RESET</button>
+          <button class="button" id="genererate-cars">GENERATE CARS</button>
         </div>
       </div>
       <span class="page-name text">Garage [4]</span>
