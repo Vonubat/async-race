@@ -1,7 +1,4 @@
-import getCars from '../api/get-cars';
 import { Car, CarName, Color, CarsResponse } from '../types/types';
-
-const test = document.getElementById('test') as HTMLElement;
 
 const createTrackContainer: () => HTMLDivElement = (): HTMLDivElement => {
   let trackContainer: HTMLElement | null = document.getElementById('track-container');
@@ -126,13 +123,12 @@ const generateTrack: (car: Car) => HTMLDivElement = (car: Car): HTMLDivElement =
   return track;
 };
 
-const generateAllTracks: () => Promise<HTMLDivElement> = async (): Promise<HTMLDivElement> => {
-  const cars: CarsResponse = await getCars(1);
+const generateAllTracks: (value: CarsResponse) => HTMLDivElement = (value: CarsResponse): HTMLDivElement => {
+  const cars: CarsResponse = value;
   const allTrackGeneration: HTMLDivElement = createTrackContainer();
   cars.items.forEach((item) => {
     allTrackGeneration.append(generateTrack(item));
   });
-  test?.after(allTrackGeneration);
   return allTrackGeneration;
 };
 
