@@ -1,6 +1,6 @@
 import { CarsResponse, Page } from '../types/types';
 
-const createPageName: (value: CarsResponse, page: Page) => HTMLSpanElement = (
+const generatePageName: (value: CarsResponse, page: Page) => HTMLSpanElement = (
   value: CarsResponse,
   page: Page
 ): HTMLSpanElement => {
@@ -11,4 +11,4 @@ const createPageName: (value: CarsResponse, page: Page) => HTMLSpanElement = (
   return pageName;
 };
 
-export default createPageName;
+export default generatePageName;
