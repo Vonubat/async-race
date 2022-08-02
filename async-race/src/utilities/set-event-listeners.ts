@@ -1,18 +1,25 @@
-import { createCar, generateCars, selectCar } from '../pages/garage';
+/* eslint-disable import/no-cycle */
+import { createCar, generateCars, selectCar, updateCar } from '../pages/garage';
 
-const setEventListeners: () => void = (): void => {
+export const setGenerateCarsBtnListener: () => void = (): void => {
   const generateCarsBtn: HTMLElement | null = document.getElementById('genererate-cars');
   if (!generateCarsBtn) {
     throw new Error("generateCarsBtn doesn't exist");
   } else {
     generateCarsBtn.addEventListener('click', generateCars);
   }
+};
+
+export const setCreateCarBtnListener: () => void = (): void => {
   const createCarBtn: HTMLElement | null = document.getElementById('create-btn');
   if (!createCarBtn) {
     throw new Error("createCarBtn doesn't exist");
   } else {
     createCarBtn.addEventListener('click', createCar);
   }
+};
+
+export const setSelectCarBtnsListener: () => void = (): void => {
   const selectCarBtns: NodeListOf<HTMLElement> = document.querySelectorAll('.select');
   if (!selectCarBtns.length) {
     throw new Error("selectCarBtns doesn't exist");
@@ -21,4 +28,18 @@ const setEventListeners: () => void = (): void => {
   }
 };
 
-export default setEventListeners;
+export const setUpdateCarBtnListener: () => void = (): void => {
+  const updateCarBtn: HTMLElement | null = document.getElementById('update-btn');
+  if (!updateCarBtn) {
+    throw new Error("updateCarBtn doesn't exist");
+  } else {
+    updateCarBtn.addEventListener('click', updateCar);
+  }
+};
+
+export const setAllEventListeners: () => void = (): void => {
+  setGenerateCarsBtnListener();
+  setCreateCarBtnListener();
+  setSelectCarBtnsListener();
+  setUpdateCarBtnListener();
+};

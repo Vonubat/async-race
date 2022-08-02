@@ -1,6 +1,7 @@
 import getCarsAPI from '../api/get-cars';
 import { CarsResponse, Page } from '../types/types';
-import setEventListeners from '../utilities/set-event-listeners';
+import { setAllEventListeners } from '../utilities/set-event-listeners';
+
 import generateGarage from './garage';
 import generateHeader from './header';
 
@@ -14,7 +15,7 @@ const generateSPA: () => Promise<HTMLElement> = async (): Promise<HTMLElement> =
   // const winnersPage: Page = 'Winners';
   const carResponse: CarsResponse = await getCarsAPI(startPage);
   body.append(generateHeader(), generateGarage(carResponse, garagePage));
-  setEventListeners();
+  setAllEventListeners();
   return body;
 };
 
