@@ -1,6 +1,6 @@
-import { GetWinnerFn, Winner } from '../types/types';
+import { GetWinnerAPIFn, Winner } from '../types/types';
 import { WINNERS } from './variables';
 
-const getWinner: GetWinnerFn = async (id: number): Promise<Winner> => (await fetch(`${WINNERS}/${id}`)).json();
+const getWinnerAPI: GetWinnerAPIFn = async (id: number): Promise<Winner> => (await fetch(`${WINNERS}/${id}`)).json();
 
-export default getWinner;
+export default getWinnerAPI;

@@ -1,7 +1,7 @@
-import { UpdateWinnerFn, Winner } from '../types/types';
+import { UpdateWinnerAPIFn, Winner } from '../types/types';
 import { WINNERS } from './variables';
 
-const updateWinner: UpdateWinnerFn = async (body: Winner): Promise<Winner> =>
+const updateWinnerAPI: UpdateWinnerAPIFn = async (body: Winner): Promise<Winner> =>
   (
     await fetch(`${WINNERS}/${body.id}`, {
       method: 'PUT',
@@ -12,4 +12,4 @@ const updateWinner: UpdateWinnerFn = async (body: Winner): Promise<Winner> =>
     })
   ).json();
 
-export default updateWinner;
+export default updateWinnerAPI;

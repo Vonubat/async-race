@@ -1,9 +1,9 @@
-import { WinnerAndCar, GetWinnersFn, Winner, WinnerParam, WinnersResponse } from '../types/types';
+import { WinnerAndCar, GetWinnersAPIFn, Winner, WinnerParam, WinnersResponse } from '../types/types';
 import getCar from './get-car';
 import getSortOrder from './get-sort-order';
 import { WINNERS, WINNERS_LIMIT } from './variables';
 
-export const getWinners: GetWinnersFn = async ({ pageNumber, sort, order }: WinnerParam): Promise<WinnersResponse> => {
+const getWinnersAPI: GetWinnersAPIFn = async ({ pageNumber, sort, order }: WinnerParam): Promise<WinnersResponse> => {
   const response: Response = await fetch(
     `${WINNERS}?_page=${pageNumber}&_limit=${WINNERS_LIMIT}${getSortOrder(sort, order)}`
   );
@@ -21,3 +21,5 @@ export const getWinners: GetWinnersFn = async ({ pageNumber, sort, order }: Winn
     count,
   };
 };
+
+export default getWinnersAPI;

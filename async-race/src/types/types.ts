@@ -64,59 +64,59 @@ export type Order = 'ASC' | 'DESC';
 export type Page = 'Garage' | 'Winners';
 
 // function interface
-export interface GetCarFn {
+export interface GetCarAPIFn {
   (id: number): Promise<Car>;
 }
 
-export interface GetCarsFn {
+export interface GetCarsAPIFn {
   (page: number): Promise<CarsResponse>;
 }
 
-export interface CreateCarFn {
+export interface CreateCarAPIFn {
   (body: Body): Promise<Car>;
 }
 
-export interface DeleteCarFn {
+export interface DeleteCarAPIFn {
   (id: number): Promise<void>;
 }
 
-export interface UpdateCarFn {
+export interface UpdateCarAPIFn {
   (id: number, body: Body): Promise<Car>;
 }
 
-export interface ControlEngineFn {
+export interface ControlEngineAPIFn {
   (id: number, status: Status): Promise<EngineResponse>;
 }
 
-export interface DriveFn {
+export interface DriveAPIFn {
   (id: number): Promise<DriveResponse>;
 }
 
-export interface GetSortOrderFn {
+export interface GetSortOrderAPIFn {
   (sort: Sort, order: Order): string;
 }
 
-export interface GetWinnersFn {
+export interface GetWinnersAPIFn {
   (WinnerParam: WinnerParam): Promise<WinnersResponse>;
 }
 
-export interface GetWinnerFn {
+export interface GetWinnerAPIFn {
   (id: number): Promise<Winner>;
 }
 
-export interface GetWinnerStatusFn {
+export interface GetWinnerStatusAPIFn {
   (id: number): Promise<number>;
 }
 
-export interface DeleteWinnerFn {
+export interface DeleteWinnerAPIFn {
   (id: number): Promise<void>;
 }
 
-export interface CreateWinnerFn {
+export interface CreateWinnerAPIFn {
   (body: Winner): Promise<Winner>;
 }
 
-export interface UpdateWinnerFn {
+export interface UpdateWinnerAPIFn {
   (body: Winner): Promise<Winner>;
 }
 
@@ -129,5 +129,5 @@ export interface GetRandomCarNameFn {
 }
 
 export interface GenerateCarBodyFn {
-  (): Body;
+  (name?: CarName, color?: Color): Body;
 }

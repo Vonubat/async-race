@@ -1,6 +1,6 @@
-import { Car, GetCarFn } from '../types/types';
+import { Car, GetCarAPIFn } from '../types/types';
 import { GARAGE } from './variables';
 
-const getCar: GetCarFn = async (id: number): Promise<Car> => (await fetch(`${GARAGE}/${id}`)).json();
+const getCarAPI: GetCarAPIFn = async (id: number): Promise<Car> => (await fetch(`${GARAGE}/${id}`)).json();
 
-export default getCar;
+export default getCarAPI;

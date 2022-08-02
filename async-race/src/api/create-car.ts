@@ -1,7 +1,7 @@
-import { Car, CreateCarFn, Body } from '../types/types';
+import { Car, CreateCarAPIFn, Body } from '../types/types';
 import { GARAGE } from './variables';
 
-const createCar: CreateCarFn = async (body: Body): Promise<Car> =>
+const createCarAPI: CreateCarAPIFn = async (body: Body): Promise<Car> =>
   (
     await fetch(GARAGE, {
       method: 'POST',
@@ -12,4 +12,4 @@ const createCar: CreateCarFn = async (body: Body): Promise<Car> =>
     })
   ).json();
 
-export default createCar;
+export default createCarAPI;

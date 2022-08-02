@@ -1,7 +1,7 @@
-import { CreateWinnerFn, Winner } from '../types/types';
+import { CreateWinnerAPIFn, Winner } from '../types/types';
 import { WINNERS } from './variables';
 
-const createWinner: CreateWinnerFn = async (body: Winner): Promise<Winner> =>
+const createWinnerAPI: CreateWinnerAPIFn = async (body: Winner): Promise<Winner> =>
   (
     await fetch(WINNERS, {
       method: 'POST',
@@ -12,4 +12,4 @@ const createWinner: CreateWinnerFn = async (body: Winner): Promise<Winner> =>
     })
   ).json();
 
-export default createWinner;
+export default createWinnerAPI;

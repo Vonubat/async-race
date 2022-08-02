@@ -1,10 +1,10 @@
-import { GetSortOrderFn, Order, Sort } from '../types/types';
+import { GetSortOrderAPIFn, Order, Sort } from '../types/types';
 
-const getSortOrder: GetSortOrderFn = (sort: Sort, order: Order): string => {
+const getSortOrderAPI: GetSortOrderAPIFn = (sort: Sort, order: Order): string => {
   if (sort && order) {
     return `&_sort=${sort}&_order=${order}`;
   }
   return '';
 };
 
-export default getSortOrder;
+export default getSortOrderAPI;

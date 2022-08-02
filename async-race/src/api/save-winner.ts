@@ -4,7 +4,7 @@ import getWinner from './get-winner';
 import getWinnerStatus from './get-winner-status';
 import updateWinner from './update-winner';
 
-const saveWinner: ({ id, time }: { id: number; time: number }) => Promise<void> = async ({
+const saveWinnerAPI: ({ id, time }: { id: number; time: number }) => Promise<void> = async ({
   id,
   time,
 }: {
@@ -25,4 +25,4 @@ const saveWinner: ({ id, time }: { id: number; time: number }) => Promise<void> 
   }
 };
 
-export default saveWinner;
+export default saveWinnerAPI;
