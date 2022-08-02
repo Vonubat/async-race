@@ -1,4 +1,4 @@
-import { Car, CarName, Color, CarsResponse } from '../types/types';
+import { Car, CarsResponse } from '../types/types';
 
 const createTrackContainer: () => HTMLDivElement = (): HTMLDivElement => {
   let trackContainer: HTMLElement | null = document.getElementById('track-container');
@@ -14,10 +14,10 @@ const createTrackContainer: () => HTMLDivElement = (): HTMLDivElement => {
   return trackContainer as HTMLDivElement;
 };
 
-const createCarName: (value: CarName) => HTMLSpanElement = (value: CarName): HTMLSpanElement => {
+const createCarName: (value: Car) => HTMLSpanElement = (value: Car): HTMLSpanElement => {
   const carName: HTMLSpanElement = document.createElement('span');
   carName.classList.add('car-name');
-  carName.innerText = `${value}`;
+  carName.innerText = `${value.name}`;
   return carName;
 };
 
@@ -87,18 +87,18 @@ const createTrack: () => HTMLDivElement = (): HTMLDivElement => {
   return track;
 };
 
-const createSVG: (color: Color) => SVGSVGElement = (color: Color): SVGSVGElement => {
+const createSVG: (value: Car) => SVGSVGElement = (value: Car): SVGSVGElement => {
   const SVG_NS = 'http://www.w3.org/2000/svg';
   const XLINK_NS = 'http://www.w3.org/1999/xlink';
-
+  const iconType: number = value.id % 4;
   const svg: SVGSVGElement = document.createElementNS(SVG_NS, 'svg');
   svg.id = 'car';
-  svg.style.fill = `${color}`;
+  svg.style.fill = `${value.color}`;
   svg.style.width = `${70}px`;
   svg.style.height = `${30}px`;
 
   const use: SVGUseElement = document.createElementNS(SVG_NS, 'use');
-  use.setAttributeNS(XLINK_NS, 'href', './assets/sprite.svg#car-01');
+  use.setAttributeNS(XLINK_NS, 'href', `./assets/sprite.svg#car-${iconType}`);
 
   svg.append(use);
 
@@ -112,10 +112,10 @@ const generateTrack: (car: Car) => HTMLDivElement = (car: Car): HTMLDivElement =
   carManipulation.append(createBtnSelect(), createBtnRemove());
   const engineControl: HTMLDivElement = createEngineControl();
   engineControl.append(createBtnStart(), createBtnStop());
-  const carName: HTMLSpanElement = createCarName(car.name);
+  const carName: HTMLSpanElement = createCarName(car);
   controlsContainer.append(carManipulation, engineControl, carName);
   const trackLayout: HTMLDivElement = createTrackLayout();
-  const svg: SVGSVGElement = createSVG(car.color);
+  const svg: SVGSVGElement = createSVG(car);
   const finish: HTMLImageElement = createFinish();
   trackLayout.append(svg, finish);
   track.append(controlsContainer, trackLayout);
