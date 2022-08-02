@@ -31,7 +31,7 @@ export interface EngineResponse {
 
 // data interface
 export interface Body {
-  name: string;
+  name: CarName;
   color: Color;
 }
 
@@ -126,4 +126,8 @@ export interface GetRandomColorFn {
 
 export interface GetRandomCarNameFn {
   (): CarName;
+}
+
+export interface GenerateCarBodyFn {
+  (): Body;
 }

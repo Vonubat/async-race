@@ -1,11 +1,11 @@
 import { Page } from '../types/types';
-import calculatePageCounter from '../utilities/page-counter';
+import { calculatePageCounter, getPageCounter } from '../utilities/page-counter';
 
 export const generatePageCounter: (page: Page) => HTMLSpanElement = (page: Page): HTMLSpanElement => {
   const pageCounter: HTMLSpanElement = document.createElement('span');
   pageCounter.classList.add('page-counter', 'text');
   pageCounter.id = `page-counter-${page.toLocaleLowerCase()}`;
-  pageCounter.innerText = `Page #1`;
+  pageCounter.innerText = `Page #${getPageCounter(page)}`;
   return pageCounter;
 };
 

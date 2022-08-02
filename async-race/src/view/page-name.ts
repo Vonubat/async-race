@@ -1,6 +1,6 @@
 import { CarsResponse, Page } from '../types/types';
 
-const generatePageName: (value: CarsResponse, page: Page) => HTMLSpanElement = (
+export const generatePageName: (value: CarsResponse, page: Page) => HTMLSpanElement = (
   value: CarsResponse,
   page: Page
 ): HTMLSpanElement => {
@@ -11,4 +11,14 @@ const generatePageName: (value: CarsResponse, page: Page) => HTMLSpanElement = (
   return pageName;
 };
 
-export default generatePageName;
+export const updatePageName: (value: CarsResponse, page: Page) => HTMLSpanElement = (
+  value: CarsResponse,
+  page: Page
+): HTMLSpanElement => {
+  const pageName: HTMLElement | null = document.getElementById(`page-name-${page.toLocaleLowerCase()}`);
+  if (!pageName) {
+    throw new Error("pageName doesn't exist");
+  }
+  pageName.innerText = `${page} [${value.count}]`;
+  return pageName;
+};

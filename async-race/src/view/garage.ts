@@ -1,7 +1,7 @@
 import { CarsResponse, Page } from '../types/types';
 import generateMenu from './menu';
 import { generatePageCounter } from './page-counter';
-import generatePageName from './page-name';
+import { generatePageName } from './page-name';
 import generatePagination from './pagination';
 import generateAllTracks from './tracks';
 
