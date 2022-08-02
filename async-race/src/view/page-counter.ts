@@ -1,21 +1,18 @@
 import { Page } from '../types/types';
-import { calculatePageCounter, getPageCounter } from '../utilities/page-counter';
+import { getPageCounter } from '../utilities/get-set-page-counter';
 
-export const generatePageCounter: (page: Page) => HTMLSpanElement = (page: Page): HTMLSpanElement => {
-  const pageCounter: HTMLSpanElement = document.createElement('span');
-  pageCounter.classList.add('page-counter', 'text');
-  pageCounter.id = `page-counter-${page.toLocaleLowerCase()}`;
-  pageCounter.innerText = `Page #${getPageCounter(page)}`;
-  return pageCounter;
-};
-
-export const updatePageCounter: (page: Page) => HTMLSpanElement = (page: Page): HTMLSpanElement => {
-  const pageCounter: HTMLSpanElement | null = document.getElementById(`page-counter-${page.toLocaleLowerCase()}`);
-
+const generatePageCounter: (page: Page) => HTMLSpanElement = (page: Page): HTMLSpanElement => {
+  let pageCounter: HTMLSpanElement | null = document.getElementById(`page-counter-${page.toLocaleLowerCase()}`);
   if (!pageCounter) {
-    throw new Error("pageCounterElement doesn't exist");
+    pageCounter = document.createElement('span');
+    pageCounter.classList.add('page-counter', 'text');
+    pageCounter.id = `page-counter-${page.toLocaleLowerCase()}`;
+    pageCounter.innerText = `Page #${getPageCounter(page)}`;
+  } else {
+    pageCounter.innerText = `Page #${getPageCounter(page)}`;
   }
 
-  pageCounter.innerText = `Page #${calculatePageCounter(page)}`;
   return pageCounter;
 };
+
+export default generatePageCounter;
