@@ -1,6 +1,7 @@
 import createCarAPI from '../api/create-car';
+import getCarAPI from '../api/get-car';
 import getCarsAPI from '../api/get-cars';
-import { CarName, CarsResponse, Color } from '../types/types';
+import { Car, CarName, CarsResponse, Color } from '../types/types';
 import generate100Cars from '../utilities/generate-100cars';
 import generateCarBody from '../utilities/generate-car-body';
 import { getPageCounter } from '../utilities/get-set-page-counter';
@@ -24,6 +25,34 @@ export const generateCars: () => Promise<CarsResponse> = async (): Promise<CarsR
 };
 
 export const createCar: () => Promise<CarsResponse> = async (): Promise<CarsResponse> => {
+  const textInput: HTMLInputElement | null = document.getElementById('create-text') as HTMLInputElement | null;
+  const colorInput: HTMLInputElement | null = document.getElementById('create-color') as HTMLInputElement | null;
+  if (!textInput || !colorInput) {
+    throw new Error("textInput || colorInput doesn't exist");
+  }
+  const name: CarName = textInput.value as CarName;
+  const color: Color = colorInput.value as Color;
+  await createCarAPI(generateCarBody(name, color));
+  return updatePage();
+};
+
+export const selectCar: (event: Event) => Promise<Car> = async (event: Event): Promise<Car> => {
+  const target: HTMLButtonElement = event.target as HTMLButtonElement;
+  const id = Number(target.value);
+  const car: Car = await getCarAPI(id);
+  const textInput: HTMLInputElement | null = document.getElementById('update-text') as HTMLInputElement | null;
+  const colorInput: HTMLInputElement | null = document.getElementById('update-color') as HTMLInputElement | null;
+  const updateBtn: HTMLButtonElement | null = document.getElementById('update-btn') as HTMLButtonElement | null;
+  if (!textInput || !colorInput || !updateBtn) {
+    throw new Error("textInput || colorInput doesn't exist");
+  }
+  textInput.value = car.name;
+  colorInput.value = car.color;
+  updateBtn.value = `${id}`;
+  return car;
+};
+
+export const updateCar: (event: Event, id?: number) => Promise<CarsResponse> = async (): Promise<CarsResponse> => {
   const textInput: HTMLInputElement | null = document.getElementById('create-text') as HTMLInputElement | null;
   const colorInput: HTMLInputElement | null = document.getElementById('create-color') as HTMLInputElement | null;
   if (!textInput || !colorInput) {

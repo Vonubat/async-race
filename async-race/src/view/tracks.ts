@@ -55,17 +55,19 @@ const createEngineControl: () => HTMLDivElement = (): HTMLDivElement => {
   return engineControl;
 };
 
-const createBtnRemove: () => HTMLButtonElement = (): HTMLButtonElement => {
+const createBtnRemove: (value: Car) => HTMLButtonElement = (value: Car): HTMLButtonElement => {
   const btnRemove: HTMLButtonElement = document.createElement('button');
-  btnRemove.classList.add('button');
+  btnRemove.classList.add('button', 'remove');
   btnRemove.innerText = 'Remove';
+  btnRemove.value = `${value.id}`;
   return btnRemove;
 };
 
-const createBtnSelect: () => HTMLButtonElement = (): HTMLButtonElement => {
+const createBtnSelect: (value: Car) => HTMLButtonElement = (value: Car): HTMLButtonElement => {
   const btnSelect: HTMLButtonElement = document.createElement('button');
-  btnSelect.classList.add('button');
+  btnSelect.classList.add('button', 'select');
   btnSelect.innerText = 'SELECT';
+  btnSelect.value = `${value.id}`;
   return btnSelect;
 };
 
@@ -109,7 +111,7 @@ const generateTrack: (car: Car) => HTMLDivElement = (car: Car): HTMLDivElement =
   const track: HTMLDivElement = createTrack();
   const controlsContainer: HTMLDivElement = createControlsContainer();
   const carManipulation: HTMLDivElement = createCarManipulation();
-  carManipulation.append(createBtnSelect(), createBtnRemove());
+  carManipulation.append(createBtnSelect(car), createBtnRemove(car));
   const engineControl: HTMLDivElement = createEngineControl();
   engineControl.append(createBtnStart(), createBtnStop());
   const carName: HTMLSpanElement = createCarName(car);
