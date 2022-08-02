@@ -5,7 +5,7 @@ export const generatePageCounter: (page: Page) => HTMLSpanElement = (page: Page)
   const pageCounter: HTMLSpanElement = document.createElement('span');
   pageCounter.classList.add('page-counter', 'text');
   pageCounter.id = `page-counter-${page.toLocaleLowerCase()}`;
-  pageCounter.innerText = `$Page #1`;
+  pageCounter.innerText = `Page #1`;
   return pageCounter;
 };
 
@@ -16,6 +16,6 @@ export const updatePageCounter: (page: Page) => HTMLSpanElement = (page: Page): 
     throw new Error("pageCounterElement doesn't exist");
   }
 
-  pageCounter.innerText = `$Page #${calculatePageCounter(page)}`;
+  pageCounter.innerText = `Page #${calculatePageCounter(page)}`;
   return pageCounter;
 };

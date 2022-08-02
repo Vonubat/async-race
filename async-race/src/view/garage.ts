@@ -22,7 +22,7 @@ const generateGarage: (value: CarsResponse, page: Page) => HTMLElement = (
   const pageName: HTMLSpanElement = generatePageName(value, page);
   const pageCounter: HTMLSpanElement = generatePageCounter(page);
   const pagination: HTMLDivElement = generatePagination(page);
-  garage.append(menu, tracks, pageName, pageCounter, pagination);
+  garage.append(menu, pageName, pageCounter, tracks, pagination);
   return garage;
 };
 
