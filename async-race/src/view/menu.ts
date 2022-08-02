@@ -56,7 +56,7 @@ const createBtnCreate: () => HTMLButtonElement = (): HTMLButtonElement => {
 
 const createBtnUpdate: () => HTMLButtonElement = (): HTMLButtonElement => {
   const btnUpdate: HTMLButtonElement = document.createElement('button');
-  btnUpdate.classList.add('button');
+  btnUpdate.classList.add('button', 'disabled');
   btnUpdate.id = 'update-btn';
   btnUpdate.innerText = 'UPDATE';
   return btnUpdate;

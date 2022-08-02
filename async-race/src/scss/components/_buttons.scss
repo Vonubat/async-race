@@ -20,12 +20,14 @@
   transition-property: color;
 }
 
-.button:focus,
+.button:active {
+  background: maroon;
+}
+
 .button:hover {
   color: #fff;
 }
 
-.button:focus:after,
 .button:hover:after {
   width: 100%;
   left: 0%;

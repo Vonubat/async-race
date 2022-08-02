@@ -5,31 +5,35 @@ import getCarAPI from '../api/get-car';
 import getCarsAPI from '../api/get-cars';
 import updateCarAPI from '../api/update-car';
 import { Car, CarName, CarsResponse, Color } from '../types/types';
+import disablePagination from '../utilities/disable-pagination';
 import generate100Cars from '../utilities/generate-100cars';
 import generateCarBody from '../utilities/generate-car-body';
-import { getPageCounter } from '../utilities/get-set-page-counter';
+import { getPageCounter, setPageCounter } from '../utilities/get-set-page-counter';
 import { setRemoveCarBtnsListener, setSelectCarBtnsListener } from '../utilities/set-event-listeners';
 import generatePageCounter from '../view/page-counter';
 import genearatePageName from '../view/page-name';
 import generateAllTracks from '../view/tracks';
 
-const updatePage: () => Promise<void> = async (): Promise<void> => {
+const updatePage: () => Promise<CarsResponse> = async (): Promise<CarsResponse> => {
+  const carResponse: CarsResponse = await getCarsAPI(getPageCounter('Garage'));
   try {
-    const carResponse: CarsResponse = await getCarsAPI(getPageCounter('Garage'));
     genearatePageName(carResponse, 'Garage');
     generatePageCounter('Garage');
+    disablePagination(carResponse, 'Garage');
     const placeForTrackContainer: HTMLElement | null = document.getElementById('page-counter-garage');
     placeForTrackContainer?.after(generateAllTracks(carResponse));
     setSelectCarBtnsListener();
     setRemoveCarBtnsListener();
+    return carResponse;
   } catch (error) {
     console.log('json data is empty');
+    return carResponse;
   }
 };
 
 export const generateCars: () => Promise<void> = async (): Promise<void> => {
   await generate100Cars();
-  return updatePage();
+  await updatePage();
 };
 
 export const createCar: () => Promise<void> = async (): Promise<void> => {
@@ -41,10 +45,10 @@ export const createCar: () => Promise<void> = async (): Promise<void> => {
   const name: CarName = textInput.value as CarName;
   const color: Color = colorInput.value as Color;
   await createCarAPI(generateCarBody(name, color));
-  return updatePage();
+  await updatePage();
 };
 
-export const selectCar: (event: Event) => Promise<Car> = async (event: Event): Promise<Car> => {
+export const selectCar: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
   const target: HTMLButtonElement = event.target as HTMLButtonElement;
   const id = Number(target.value);
   const car: Car = await getCarAPI(id);
@@ -58,7 +62,6 @@ export const selectCar: (event: Event) => Promise<Car> = async (event: Event): P
   textInput.value = car.name;
   colorInput.value = car.color;
   updateBtn.value = `${id}`;
-  return car;
 };
 
 export const updateCar: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
@@ -77,12 +80,22 @@ export const updateCar: (event: Event) => Promise<void> = async (event: Event): 
   colorInput.value = '#FFFFFF';
   updateBtn.value = '';
   updateBtn.classList.add('disabled');
-  return updatePage();
+  await updatePage();
 };
 
 export const removeCar: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
   const target: HTMLButtonElement = event.target as HTMLButtonElement;
   const id = Number(target.value);
   await deletetCarAPI(id);
-  return updatePage();
+  await updatePage();
+};
+
+export const switchPaginationNext: () => Promise<void> = async (): Promise<void> => {
+  setPageCounter('Garage', '+');
+  await updatePage();
+};
+
+export const switchPaginationPrev: () => Promise<void> = async (): Promise<void> => {
+  setPageCounter('Garage', '-');
+  await updatePage();
 };

@@ -9,7 +9,7 @@ const createPagination: (page: Page) => HTMLDivElement = (page: Page): HTMLDivEl
 
 const createBtnPrev: (page: Page) => HTMLButtonElement = (page: Page): HTMLButtonElement => {
   const btnPrev: HTMLButtonElement = document.createElement('button');
-  btnPrev.classList.add('button');
+  btnPrev.classList.add('button', 'disabled');
   btnPrev.innerText = 'PREV';
   btnPrev.id = `btn-prev-${page.toLocaleLowerCase()}`;
   return btnPrev;

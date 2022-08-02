@@ -1,5 +1,13 @@
 /* eslint-disable import/no-cycle */
-import { createCar, generateCars, removeCar, selectCar, updateCar } from '../pages/garage';
+import {
+  createCar,
+  generateCars,
+  removeCar,
+  selectCar,
+  switchPaginationNext,
+  switchPaginationPrev,
+  updateCar,
+} from '../pages/garage';
 
 export const setGenerateCarsBtnListener: () => void = (): void => {
   const generateCarsBtn: HTMLElement | null = document.getElementById('genererate-cars');
@@ -46,11 +54,31 @@ export const setUpdateCarBtnListener: () => void = (): void => {
   }
 };
 
+export const setNextBtnListener: () => void = (): void => {
+  const setNextBtnGarage: HTMLElement | null = document.getElementById('btn-next-garage');
+  if (!setNextBtnGarage) {
+    throw new Error("setNextBtnGarage doesn't exist");
+  } else {
+    setNextBtnGarage.addEventListener('click', switchPaginationNext);
+  }
+};
+
+export const setPrevBtnListener: () => void = (): void => {
+  const setPrevBtnGarage: HTMLElement | null = document.getElementById('btn-prev-garage');
+  if (!setPrevBtnGarage) {
+    throw new Error("setPrevBtnGarage doesn't exist");
+  } else {
+    setPrevBtnGarage.addEventListener('click', switchPaginationPrev);
+  }
+};
+
 export const setAllEventListeners: () => void = (): void => {
   try {
     setGenerateCarsBtnListener();
     setCreateCarBtnListener();
     setUpdateCarBtnListener();
+    setNextBtnListener();
+    setPrevBtnListener();
     setSelectCarBtnsListener();
     setRemoveCarBtnsListener();
   } catch (error) {
