@@ -15,12 +15,12 @@ const disablePagination: (value: CarsResponse, page: Page) => Promise<void> = as
   const lastPage: number = Math.ceil(Number(value.count) / GARAGE_LIMIT);
   const startPage = 1;
 
-  if (currentPage === lastPage) {
+  if (currentPage >= lastPage) {
     paginationNextBtn.classList.add('disabled');
   } else {
     paginationNextBtn.classList.remove('disabled');
   }
-  if (currentPage === startPage) {
+  if (currentPage <= startPage) {
     paginationPrevBtn.classList.add('disabled');
   } else {
     paginationPrevBtn.classList.remove('disabled');

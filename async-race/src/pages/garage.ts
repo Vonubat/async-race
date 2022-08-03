@@ -149,5 +149,3 @@ export const drive: (event: Event) => Promise<void> = async (event: Event): Prom
     stoppedAnimationStorage.set(id, id);
   }
 };
-
-//

@@ -1,5 +1,6 @@
 import getCarsAPI from '../api/get-cars';
 import { CarsResponse, Page } from '../types/types';
+import disablePagination from '../utilities/disable-pagination';
 import { setAllEventListeners } from '../utilities/set-event-listeners';
 
 import generateGarage from './garage';
@@ -16,6 +17,7 @@ const generateSPA: () => Promise<HTMLElement> = async (): Promise<HTMLElement> =
   const carResponse: CarsResponse = await getCarsAPI(startPage);
   body.append(generateHeader(), generateGarage(carResponse, garagePage));
   setAllEventListeners();
+  disablePagination(carResponse, garagePage);
   return body;
 };
 
