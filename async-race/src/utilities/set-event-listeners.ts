@@ -1,10 +1,10 @@
 /* eslint-disable import/no-cycle */
 import {
+  controlEngine,
   createCar,
   generateCars,
   removeCar,
   selectCar,
-  startEngine,
   switchPaginationNext,
   switchPaginationPrev,
   updateCar,
@@ -56,29 +56,38 @@ export const setUpdateCarBtnListener: () => void = (): void => {
 };
 
 export const setNextBtnListener: () => void = (): void => {
-  const setNextBtnGarage: HTMLElement | null = document.getElementById('btn-next-garage');
-  if (!setNextBtnGarage) {
+  const nextBtnGarage: HTMLElement | null = document.getElementById('btn-next-garage');
+  if (!nextBtnGarage) {
     throw new Error("setNextBtnGarage doesn't exist");
   } else {
-    setNextBtnGarage.addEventListener('click', switchPaginationNext);
+    nextBtnGarage.addEventListener('click', switchPaginationNext);
   }
 };
 
 export const setPrevBtnListener: () => void = (): void => {
-  const setPrevBtnGarage: HTMLElement | null = document.getElementById('btn-prev-garage');
-  if (!setPrevBtnGarage) {
+  const prevBtnGarage: HTMLElement | null = document.getElementById('btn-prev-garage');
+  if (!prevBtnGarage) {
     throw new Error("setPrevBtnGarage doesn't exist");
   } else {
-    setPrevBtnGarage.addEventListener('click', switchPaginationPrev);
+    prevBtnGarage.addEventListener('click', switchPaginationPrev);
   }
 };
 
 export const setStartBtnListener: () => void = (): void => {
-  const setStartBtn: NodeListOf<HTMLElement> = document.querySelectorAll('.start');
-  if (!setStartBtn.length) {
+  const startBtn: NodeListOf<HTMLElement> = document.querySelectorAll('.start');
+  if (!startBtn.length) {
     throw new Error("selectCarBtns doesn't exist");
   } else {
-    Array.from(setStartBtn).forEach((item: HTMLElement): void => item.addEventListener('click', startEngine));
+    Array.from(startBtn).forEach((item: HTMLElement): void => item.addEventListener('click', controlEngine));
+  }
+};
+
+export const setStopBtnListener: () => void = (): void => {
+  const stopBtn: NodeListOf<HTMLElement> = document.querySelectorAll('.stop');
+  if (!stopBtn.length) {
+    throw new Error("selectCarBtns doesn't exist");
+  } else {
+    Array.from(stopBtn).forEach((item: HTMLElement): void => item.addEventListener('click', controlEngine));
   }
 };
 
@@ -92,6 +101,7 @@ export const setAllEventListeners: () => void = (): void => {
     setSelectCarBtnsListener();
     setRemoveCarBtnsListener();
     setStartBtnListener();
+    setStopBtnListener();
   } catch (error) {
     console.log('json data is empty');
   }

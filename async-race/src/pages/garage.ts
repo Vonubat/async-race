@@ -5,7 +5,7 @@ import deletetCarAPI from '../api/delete-car';
 import getCarAPI from '../api/get-car';
 import getCarsAPI from '../api/get-cars';
 import updateCarAPI from '../api/update-car';
-import { Car, CarName, CarsResponse, Color, EngineResponse } from '../types/types';
+import { Car, CarName, CarsResponse, Color, EngineResponse, Status } from '../types/types';
 import disablePagination from '../utilities/disable-pagination';
 import generate100Cars from '../utilities/generate-100cars';
 import generateCarBody from '../utilities/generate-car-body';
@@ -14,6 +14,7 @@ import {
   setRemoveCarBtnsListener,
   setSelectCarBtnsListener,
   setStartBtnListener,
+  setStopBtnListener,
 } from '../utilities/set-event-listeners';
 import generatePageCounter from '../view/page-counter';
 import genearatePageName from '../view/page-name';
@@ -30,6 +31,7 @@ const updatePage: () => Promise<CarsResponse> = async (): Promise<CarsResponse> 
     setSelectCarBtnsListener();
     setRemoveCarBtnsListener();
     setStartBtnListener();
+    setStopBtnListener();
     return carResponse;
   } catch (error) {
     console.log('json data is empty');
@@ -106,9 +108,17 @@ export const switchPaginationPrev: () => Promise<void> = async (): Promise<void>
   await updatePage();
 };
 
-export const startEngine: (event: Event) => Promise<EngineResponse> = async (event: Event): Promise<EngineResponse> => {
+export const controlEngine: (event: Event) => Promise<EngineResponse> = async (
+  event: Event
+): Promise<EngineResponse> => {
   const target: HTMLButtonElement = event.target as HTMLButtonElement;
   const id = Number(target.value);
-  const responseEngine: EngineResponse = await controlEngineAPI(id, 'started');
+  let status: Status;
+  if (target.classList.contains('start')) {
+    status = 'started';
+  } else {
+    status = 'stopped';
+  }
+  const responseEngine: EngineResponse = await controlEngineAPI(id, status);
   return responseEngine;
 };
