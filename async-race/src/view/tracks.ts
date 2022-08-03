@@ -1,4 +1,5 @@
 import { Car, CarsResponse } from '../types/types';
+import createSVG from '../utilities/createSVG';
 
 const createTrackContainer: () => HTMLDivElement = (): HTMLDivElement => {
   let trackContainer: HTMLElement | null = document.getElementById('track-container');
@@ -92,24 +93,6 @@ const createTrack: () => HTMLDivElement = (): HTMLDivElement => {
   return track;
 };
 
-const createSVG: (value: Car) => SVGSVGElement = (value: Car): SVGSVGElement => {
-  const SVG_NS = 'http://www.w3.org/2000/svg';
-  const XLINK_NS = 'http://www.w3.org/1999/xlink';
-  const iconType: number = value.id % 4;
-  const svg: SVGSVGElement = document.createElementNS(SVG_NS, 'svg');
-  svg.id = `car-${value.id}`;
-  svg.style.fill = `${value.color}`;
-  svg.style.width = `${100}px`;
-  svg.style.height = `${50}px`;
-
-  const use: SVGUseElement = document.createElementNS(SVG_NS, 'use');
-  use.setAttributeNS(XLINK_NS, 'href', `./assets/sprite.svg#car-${iconType}`);
-
-  svg.append(use);
-
-  return svg;
-};
-
 const generateTrack: (car: Car) => HTMLDivElement = (car: Car): HTMLDivElement => {
   const track: HTMLDivElement = createTrack();
   const controlsContainer: HTMLDivElement = createControlsContainer();
@@ -120,7 +103,7 @@ const generateTrack: (car: Car) => HTMLDivElement = (car: Car): HTMLDivElement =
   const carName: HTMLSpanElement = createCarName(car);
   controlsContainer.append(carManipulation, engineControl, carName);
   const trackLayout: HTMLDivElement = createTrackLayout();
-  const svg: SVGSVGElement = createSVG(car);
+  const svg: SVGSVGElement = createSVG(car, { width: `${100}px`, height: `${50}px` });
   const finish: HTMLImageElement = createFinish(car);
   trackLayout.append(svg, finish);
   track.append(controlsContainer, trackLayout);
@@ -131,7 +114,7 @@ const generateTrack: (car: Car) => HTMLDivElement = (car: Car): HTMLDivElement =
 const generateAllTracks: (value: CarsResponse) => HTMLDivElement = (value: CarsResponse): HTMLDivElement => {
   const cars: CarsResponse = value;
   const allTrackGeneration: HTMLDivElement = createTrackContainer();
-  cars.items.forEach((item) => {
+  cars.items.forEach((item: Car): void => {
     allTrackGeneration.append(generateTrack(item));
   });
   return allTrackGeneration;

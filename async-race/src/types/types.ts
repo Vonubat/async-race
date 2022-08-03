@@ -62,6 +62,7 @@ export type Status = 'started' | 'stopped';
 export type Sort = 'id' | 'wins' | 'time';
 export type Order = 'ASC' | 'DESC';
 export type Page = 'Garage' | 'Winners';
+export type SVGSizes = { width: `${number}px`; height: `${number}px` };
 
 // function interface
 export interface GetCarAPIFn {
