@@ -1,6 +1,5 @@
-import getWinnersAPI from '../api/get-winners';
-import { WinnerAndCar, WinnerParam, WinnersResponse } from '../types/types';
-import createSVG from '../utilities/createSVG';
+import { WinnerAndCar, WinnersResponse } from '../types/types';
+import createSVG from '../utilities/create-SVG';
 
 const createTable: () => HTMLTableElement = (): HTMLTableElement => {
   let table: HTMLElement | null = document.getElementById('table');
@@ -72,17 +71,12 @@ const generateTableRow: (value: WinnerAndCar, position: number) => HTMLTableRowE
   return tr;
 };
 
-const generateTable: ({ pageNumber, sort, order }: WinnerParam) => Promise<HTMLTableElement> = async ({
-  pageNumber,
-  sort,
-  order,
-}: WinnerParam): Promise<HTMLTableElement> => {
-  const winners: WinnersResponse = await getWinnersAPI({ pageNumber, sort, order });
+const generateTable: (value: WinnersResponse) => HTMLTableElement = (value: WinnersResponse): HTMLTableElement => {
   const table: HTMLTableElement = createTable();
   const tbody: HTMLTableSectionElement = createTBody();
   const tableHead: HTMLTableRowElement = generateTableHead();
   table.append(tbody, tableHead);
-  winners.items.forEach((item: WinnerAndCar, index: number): void => tbody.append(generateTableRow(item, index)));
+  value.items.forEach((item: WinnerAndCar, index: number): void => tbody.append(generateTableRow(item, index)));
   return table;
 };
 

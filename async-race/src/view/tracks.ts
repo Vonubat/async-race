@@ -1,5 +1,5 @@
 import { Car, CarsResponse } from '../types/types';
-import createSVG from '../utilities/createSVG';
+import createSVG from '../utilities/create-SVG';
 
 const createTrackContainer: () => HTMLDivElement = (): HTMLDivElement => {
   let trackContainer: HTMLElement | null = document.getElementById('track-container');

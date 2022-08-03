@@ -18,9 +18,9 @@ const generateGarage: (value: CarsResponse, page: Page) => HTMLElement = (
 ): HTMLElement => {
   const garage: HTMLElement = createGarage();
   const menu: HTMLDivElement = generateMenu();
-  const tracks: HTMLDivElement = generateAllTracks(value);
   const pageName: HTMLSpanElement = generatePageName(value, page);
   const pageCounter: HTMLSpanElement = generatePageCounter(page);
+  const tracks: HTMLDivElement = generateAllTracks(value);
   const pagination: HTMLDivElement = generatePagination(page);
   garage.append(menu, pageName, pageCounter, tracks, pagination);
   return garage;
