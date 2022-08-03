@@ -136,6 +136,8 @@ export const controlEngine: (
 export const drive: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
   const target: HTMLButtonElement = event.target as HTMLButtonElement;
   const id = Number(target.value);
+  console.log(event);
+
   const { responseEngine, status } = await controlEngine(event, id);
   if (status === 'started') {
     animateCar(id, responseEngine);
@@ -148,4 +150,15 @@ export const drive: (event: Event) => Promise<void> = async (event: Event): Prom
     animateCar(id, responseEngine);
     stoppedAnimationStorage.set(id, id);
   }
+};
+
+export const race: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
+  await updatePage();
+  const target: HTMLButtonElement = event.target as HTMLButtonElement;
+  target.classList.add('disabled');
+  const members: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.start');
+  Array.from(members).forEach((item: HTMLButtonElement): void => {
+    const fakeEvenet = new MouseEvent('click');
+    item.dispatchEvent(fakeEvenet);
+  });
 };

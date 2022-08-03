@@ -3,6 +3,7 @@ import {
   createCar,
   drive,
   generateCars,
+  race,
   removeCar,
   selectCar,
   switchPaginationNext,
@@ -91,11 +92,21 @@ export const setStopBtnListener: () => void = (): void => {
   }
 };
 
+export const setRaceBtnListener: () => void = (): void => {
+  const raceBtn: HTMLElement | null = document.getElementById('race');
+  if (!raceBtn) {
+    throw new Error("setPrevBtnGarage doesn't exist");
+  } else {
+    raceBtn.addEventListener('click', race);
+  }
+};
+
 export const setAllEventListeners: () => void = (): void => {
   try {
     setGenerateCarsBtnListener();
     setCreateCarBtnListener();
     setUpdateCarBtnListener();
+    setRaceBtnListener();
     setNextBtnListener();
     setPrevBtnListener();
     setSelectCarBtnsListener();
