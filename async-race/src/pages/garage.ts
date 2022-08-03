@@ -131,13 +131,13 @@ export const controlEngine: (
 export const drive: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
   const target: HTMLButtonElement = event.target as HTMLButtonElement;
   const id = Number(target.value);
-  // const { velocity, distance } = await controlEngine(event, id);
   const { responseEngine, status } = await controlEngine(event, id);
   if (status === 'started') {
     animateCar(id, responseEngine);
     const { success } = await driveAPI(id);
     if (!success) window.cancelAnimationFrame(getRequestID());
   } else {
+    window.cancelAnimationFrame(getRequestID());
     animateCar(id, responseEngine);
   }
 };
