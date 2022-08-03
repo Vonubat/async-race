@@ -1,3 +1,5 @@
+/* eslint import/no-cycle: [2, { maxDepth: 1 }] */
+
 import getCarsAPI from '../api/get-cars';
 import getWinnersAPI from '../api/get-winners';
 import { CarsResponse, Page, WinnersResponse } from '../types/types';

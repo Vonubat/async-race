@@ -5,25 +5,14 @@ import deletetCarAPI from '../api/delete-car';
 import deleteWinnerAPI from '../api/delete-winner';
 import driveAPI from '../api/drive';
 import getCarAPI from '../api/get-car';
-import getCarsAPI from '../api/get-cars';
-import getWinnersAPI from '../api/get-winners';
 import updateCarAPI from '../api/update-car';
-import { Car, CarName, CarsResponse, Color, EngineResponse, Status, WinnersResponse } from '../types/types';
-import disablePagination from '../utilities/disable-pagination';
+import { Actions, Car, CarName, Color, EngineResponse, Page, Status } from '../types/types';
 import generate100Cars from '../utilities/generate-100cars';
 import generateCarBody from '../utilities/generate-car-body';
-import { getPageCounter, setPageCounter } from '../utilities/get-set-page-counter';
-import {
-  setRemoveCarBtnsListener,
-  setSelectCarBtnsListener,
-  setStartBtnListener,
-  setStopBtnListener,
-} from '../utilities/set-event-listeners';
+import { getButtonProp } from '../utilities/get-elements';
+import { setPageCounter } from '../utilities/get-set-page-counter';
+import updatePage from '../utilities/update-page';
 import { animateCar, requestIDStorage, stoppedAnimationStorage } from '../view/animation';
-import generatePageCounter from '../view/page-counter';
-import genearatePageName from '../view/page-name';
-import generateTable from '../view/table';
-import generateAllTracks from '../view/tracks';
 
 const deleteWinner: (id: number) => Promise<void> = async (id: number): Promise<void> => {
   await deleteWinnerAPI(id);
@@ -31,7 +20,7 @@ const deleteWinner: (id: number) => Promise<void> = async (id: number): Promise<
 
 export const generateCars: () => Promise<void> = async (): Promise<void> => {
   await generate100Cars();
-  await updatePage();
+  await updatePage('Garage');
 };
 
 export const createCar: () => Promise<void> = async (): Promise<void> => {
@@ -43,7 +32,7 @@ export const createCar: () => Promise<void> = async (): Promise<void> => {
   const name: CarName = textInput.value as CarName;
   const color: Color = colorInput.value as Color;
   await createCarAPI(generateCarBody(name, color));
-  await updatePage();
+  await updatePage('Garage');
 };
 
 export const selectCar: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
@@ -79,7 +68,7 @@ export const updateCar: (event: Event) => Promise<void> = async (event: Event): 
   colorInput.value = '#FFFFFF';
   updateBtn.value = '';
   updateBtn.classList.add('disabled');
-  await updatePage();
+  await updatePage('Garage');
 };
 
 export const removeCar: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
@@ -87,27 +76,36 @@ export const removeCar: (event: Event) => Promise<void> = async (event: Event): 
   const id = Number(target.value);
   await deletetCarAPI(id);
   await deleteWinner(id);
-  await updatePage();
+  await updatePage('Garage');
+  await updatePage('Winners');
 };
 
-export const switchPaginationNext: () => Promise<void> = async (): Promise<void> => {
-  setPageCounter('Garage', '+');
-  await updatePage();
-};
+export const switchPagination: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
+  const { target } = getButtonProp(event);
+  let page: Page;
+  let action: Actions;
+  if (target.id.includes('garage')) {
+    page = 'Garage';
+  } else {
+    page = 'Winners';
+  }
 
-export const switchPaginationPrev: () => Promise<void> = async (): Promise<void> => {
-  setPageCounter('Garage', '-');
-  await updatePage();
+  if (target.id.includes('next')) {
+    action = '+';
+  } else {
+    action = '-';
+  }
+  setPageCounter(page, action);
+  await updatePage(page);
 };
 
 export const controlEngine: (
-  event: Event,
+  target: HTMLButtonElement,
   id: number
 ) => Promise<{ responseEngine: EngineResponse; status: Status }> = async (
-  event: Event,
+  target: HTMLButtonElement,
   id: number
 ): Promise<{ responseEngine: EngineResponse; status: Status }> => {
-  const target: HTMLButtonElement = event.target as HTMLButtonElement;
   let status: Status;
   if (target.classList.contains('start')) {
     status = 'started';
@@ -123,9 +121,8 @@ export const controlEngine: (
 };
 
 export const drive: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
-  const target: HTMLButtonElement = event.target as HTMLButtonElement;
-  const id = Number(target.value);
-  const { responseEngine, status } = await controlEngine(event, id);
+  const { target, id } = getButtonProp(event);
+  const { responseEngine, status } = await controlEngine(target, id);
   if (status === 'started') {
     animateCar(id, responseEngine);
     stoppedAnimationStorage.delete(id);
@@ -143,7 +140,7 @@ export const drive: (event: Event) => Promise<void> = async (event: Event): Prom
 };
 
 export const race: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
-  await updatePage();
+  await updatePage('Garage');
   const target: HTMLButtonElement = event.target as HTMLButtonElement;
   target.classList.add('disabled');
   target.nextElementSibling?.classList.toggle('disabled');
@@ -157,5 +154,5 @@ export const race: (event: Event) => Promise<void> = async (event: Event): Promi
 };
 
 export const reset: () => Promise<void> = async (): Promise<void> => {
-  await updatePage();
+  await updatePage('Garage');
 };

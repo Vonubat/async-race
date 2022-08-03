@@ -63,6 +63,7 @@ export type Sort = 'id' | 'wins' | 'time';
 export type Order = 'ASC' | 'DESC';
 export type Page = 'Garage' | 'Winners';
 export type SVGSizes = { width: `${number}px`; height: `${number}px` };
+export type Actions = '+' | '-';
 
 // function interface
 export interface GetCarAPIFn {
@@ -131,4 +132,11 @@ export interface GetRandomCarNameFn {
 
 export interface GenerateCarBodyFn {
   (name?: CarName, color?: Color): Body;
+}
+
+export interface GetButtonPropFn {
+  (event: Event): {
+    target: HTMLButtonElement;
+    id: number;
+  };
 }

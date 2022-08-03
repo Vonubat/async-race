@@ -1,9 +1,9 @@
-import { Page } from '../types/types';
+import { Actions, Page } from '../types/types';
 
 let conterGarage = 1;
 let conterWinners = 1;
 
-export const setPageCounter: (page: Page, action: '+' | '-') => number = (page: Page, action: '+' | '-'): number => {
+export const setPageCounter: (page: Page, action: Actions) => number = (page: Page, action: Actions): number => {
   let currentCounter: number;
   if (action === '+') {
     currentCounter = page === 'Garage' ? (conterGarage += 1) : (conterWinners += 1);

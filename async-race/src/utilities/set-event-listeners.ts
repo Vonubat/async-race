@@ -7,8 +7,7 @@ import {
   removeCar,
   reset,
   selectCar,
-  switchPaginationNext,
-  switchPaginationPrev,
+  switchPagination,
   updateCar,
 } from '../app/app';
 
@@ -57,21 +56,18 @@ export const setUpdateCarBtnListener: () => void = (): void => {
   }
 };
 
-export const setNextBtnListener: () => void = (): void => {
+export const setPaginationListener: () => void = (): void => {
   const nextBtnGarage: HTMLElement | null = document.getElementById('btn-next-garage');
-  if (!nextBtnGarage) {
-    throw new Error("setNextBtnGarage doesn't exist");
-  } else {
-    nextBtnGarage.addEventListener('click', switchPaginationNext);
-  }
-};
-
-export const setPrevBtnListener: () => void = (): void => {
+  const nextBtnWinners: HTMLElement | null = document.getElementById('btn-next-winners');
   const prevBtnGarage: HTMLElement | null = document.getElementById('btn-prev-garage');
-  if (!prevBtnGarage) {
-    throw new Error("setPrevBtnGarage doesn't exist");
+  const prevBtnWinners: HTMLElement | null = document.getElementById('btn-prev-winners');
+  if (!nextBtnGarage || !nextBtnWinners || !prevBtnGarage || !prevBtnWinners) {
+    throw new Error("NextBtnGarage || nextBtnWinners  doesn't exist");
   } else {
-    prevBtnGarage.addEventListener('click', switchPaginationPrev);
+    nextBtnGarage.addEventListener('click', switchPagination);
+    nextBtnWinners.addEventListener('click', switchPagination);
+    prevBtnGarage.addEventListener('click', switchPagination);
+    prevBtnWinners.addEventListener('click', switchPagination);
   }
 };
 
@@ -118,8 +114,7 @@ export const setAllEventListeners: () => void = (): void => {
     setUpdateCarBtnListener();
     setRaceBtnListener();
     setResetBtnListener();
-    setNextBtnListener();
-    setPrevBtnListener();
+    setPaginationListener();
     setSelectCarBtnsListener();
     setRemoveCarBtnsListener();
     setStartBtnListener();
