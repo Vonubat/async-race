@@ -75,7 +75,8 @@ const generateTable: (value: WinnersResponse) => HTMLTableElement = (value: Winn
   const table: HTMLTableElement = createTable();
   const tbody: HTMLTableSectionElement = createTBody();
   const tableHead: HTMLTableRowElement = generateTableHead();
-  table.append(tbody, tableHead);
+  table.append(tbody);
+  tbody.appendChild(tableHead);
   value.items.forEach((item: WinnerAndCar, index: number): void => tbody.append(generateTableRow(item, index)));
   return table;
 };
