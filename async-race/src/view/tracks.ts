@@ -21,11 +21,12 @@ const createCarName: (value: Car) => HTMLSpanElement = (value: Car): HTMLSpanEle
   return carName;
 };
 
-const createFinish: () => HTMLImageElement = (): HTMLImageElement => {
+const createFinish: (value: Car) => HTMLImageElement = (value: Car): HTMLImageElement => {
   const finish: HTMLImageElement = document.createElement('img');
   finish.classList.add('finish');
   finish.src = './assets/finish.png';
   finish.alt = 'checkered flag';
+  finish.id = `finish-${value.id}`;
   return finish;
 };
 
@@ -96,10 +97,10 @@ const createSVG: (value: Car) => SVGSVGElement = (value: Car): SVGSVGElement => 
   const XLINK_NS = 'http://www.w3.org/1999/xlink';
   const iconType: number = value.id % 4;
   const svg: SVGSVGElement = document.createElementNS(SVG_NS, 'svg');
-  svg.id = 'car';
+  svg.id = `car-${value.id}`;
   svg.style.fill = `${value.color}`;
-  svg.style.width = `${70}px`;
-  svg.style.height = `${30}px`;
+  svg.style.width = `${100}px`;
+  svg.style.height = `${50}px`;
 
   const use: SVGUseElement = document.createElementNS(SVG_NS, 'use');
   use.setAttributeNS(XLINK_NS, 'href', `./assets/sprite.svg#car-${iconType}`);
@@ -120,7 +121,7 @@ const generateTrack: (car: Car) => HTMLDivElement = (car: Car): HTMLDivElement =
   controlsContainer.append(carManipulation, engineControl, carName);
   const trackLayout: HTMLDivElement = createTrackLayout();
   const svg: SVGSVGElement = createSVG(car);
-  const finish: HTMLImageElement = createFinish();
+  const finish: HTMLImageElement = createFinish(car);
   trackLayout.append(svg, finish);
   track.append(controlsContainer, trackLayout);
 

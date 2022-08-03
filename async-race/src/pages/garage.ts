@@ -16,6 +16,7 @@ import {
   setStartBtnListener,
   setStopBtnListener,
 } from '../utilities/set-event-listeners';
+import animateCar from '../view/animation';
 import generatePageCounter from '../view/page-counter';
 import genearatePageName from '../view/page-name';
 import generateAllTracks from '../view/tracks';
@@ -120,5 +121,6 @@ export const controlEngine: (event: Event) => Promise<EngineResponse> = async (
     status = 'stopped';
   }
   const responseEngine: EngineResponse = await controlEngineAPI(id, status);
+  animateCar(id, responseEngine);
   return responseEngine;
 };
