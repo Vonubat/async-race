@@ -25,35 +25,6 @@ import genearatePageName from '../view/page-name';
 import generateTable from '../view/table';
 import generateAllTracks from '../view/tracks';
 
-const updatePage: () => Promise<CarsResponse> = async (): Promise<CarsResponse> => {
-  const carResponse: CarsResponse = await getCarsAPI(getPageCounter('Garage'));
-  const winnersResponse: WinnersResponse = await getWinnersAPI({
-    pageNumber: getPageCounter('Winners'),
-    sort: 'id',
-    order: 'ASC',
-  });
-  try {
-    genearatePageName(carResponse, 'Garage');
-    genearatePageName(winnersResponse, 'Winners');
-    generatePageCounter('Garage');
-    generatePageCounter('Winners');
-    disablePagination(carResponse, 'Garage');
-    disablePagination(winnersResponse, 'Winners');
-    const placeForTrackContainer: HTMLElement | null = document.getElementById('page-counter-garage');
-    placeForTrackContainer?.after(generateAllTracks(carResponse));
-    const placeForTable: HTMLElement | null = document.getElementById('page-counter-winners');
-    placeForTable?.after(generateTable(winnersResponse));
-    setSelectCarBtnsListener();
-    setRemoveCarBtnsListener();
-    setStartBtnListener();
-    setStopBtnListener();
-    return carResponse;
-  } catch (error) {
-    console.log('json data is empty');
-    return carResponse;
-  }
-};
-
 const deleteWinner: (id: number) => Promise<void> = async (id: number): Promise<void> => {
   await deleteWinnerAPI(id);
 };
