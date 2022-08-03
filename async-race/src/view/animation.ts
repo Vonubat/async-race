@@ -1,7 +1,14 @@
 /* eslint-disable max-lines-per-function */
 import { EngineResponse } from '../types/types';
 
-const animateCar: (id: number, value: EngineResponse) => void = (id: number, value: EngineResponse): void => {
+// const getElemPosition = (elem: HTMLElement) => {};
+let requestID: number;
+
+export const getRequestID = () => {
+  return requestID;
+};
+
+export const animateCar: (id: number, value: EngineResponse) => void = (id: number, value: EngineResponse): void => {
   const car: HTMLElement = document.getElementById(`car-${id}`) as HTMLElement;
   const finish: HTMLImageElement = document.getElementById(`finish-${id}`) as HTMLImageElement;
   const startPoint: number = car.getBoundingClientRect().x + car.getBoundingClientRect().width / 2;
@@ -11,8 +18,7 @@ const animateCar: (id: number, value: EngineResponse) => void = (id: number, val
   let startTimeStamp: number;
   let previousTimeStamp: number;
   let done = false;
-
-  function step(timestamp: number): void {
+  const getStep: (timestamp: number) => void = (timestamp: number): void => {
     if (startTimeStamp === undefined) {
       startTimeStamp = timestamp;
     }
@@ -25,13 +31,38 @@ const animateCar: (id: number, value: EngineResponse) => void = (id: number, val
     if (elapsed < animationTime) {
       previousTimeStamp = timestamp;
       if (!done) {
-        window.requestAnimationFrame(step);
+        requestID = window.requestAnimationFrame(getStep);
+        // console.log(requestID);
+        // if (requestID === 50) {
+        //   window.cancelAnimationFrame(requestID);
+        // }
       }
     }
-  }
-  window.requestAnimationFrame(step);
+  };
+  requestID = window.requestAnimationFrame(getStep);
 };
 
-export default animateCar;
-
 // https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+
+export const animation = (car: HTMLElement, distanceBtwElem: number, animationTime: number): { id: number } => {
+  const targetCar = car;
+  let start: number | null = null;
+  const state: {
+    id: number;
+  } = { id: 1 };
+
+  const getStep = (timestamp: number) => {
+    if (!start) start = timestamp;
+    const time = timestamp - start;
+    const passed = Math.round(time * (distanceBtwElem / animationTime));
+    targetCar.style.transform = `translateX(${Math.min(passed, distanceBtwElem)}px) translateY(52px)`;
+
+    if (passed < distanceBtwElem) {
+      state.id = window.requestAnimationFrame(getStep);
+    }
+  };
+
+  state.id = window.requestAnimationFrame(getStep);
+
+  return state;
+};

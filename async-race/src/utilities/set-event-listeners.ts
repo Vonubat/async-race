@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import {
-  controlEngine,
   createCar,
+  drive,
   generateCars,
   removeCar,
   selectCar,
@@ -78,7 +78,7 @@ export const setStartBtnListener: () => void = (): void => {
   if (!startBtn.length) {
     throw new Error("selectCarBtns doesn't exist");
   } else {
-    Array.from(startBtn).forEach((item: HTMLElement): void => item.addEventListener('click', controlEngine));
+    Array.from(startBtn).forEach((item: HTMLElement): void => item.addEventListener('click', drive));
   }
 };
 
@@ -87,7 +87,7 @@ export const setStopBtnListener: () => void = (): void => {
   if (!stopBtn.length) {
     throw new Error("selectCarBtns doesn't exist");
   } else {
-    Array.from(stopBtn).forEach((item: HTMLElement): void => item.addEventListener('click', controlEngine));
+    Array.from(stopBtn).forEach((item: HTMLElement): void => item.addEventListener('click', drive));
   }
 };
 

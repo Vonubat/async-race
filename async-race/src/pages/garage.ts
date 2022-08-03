@@ -2,6 +2,7 @@
 import controlEngineAPI from '../api/control-engine';
 import createCarAPI from '../api/create-car';
 import deletetCarAPI from '../api/delete-car';
+import driveAPI from '../api/drive';
 import getCarAPI from '../api/get-car';
 import getCarsAPI from '../api/get-cars';
 import updateCarAPI from '../api/update-car';
@@ -16,7 +17,7 @@ import {
   setStartBtnListener,
   setStopBtnListener,
 } from '../utilities/set-event-listeners';
-import animateCar from '../view/animation';
+import { animateCar, getRequestID } from '../view/animation';
 import generatePageCounter from '../view/page-counter';
 import genearatePageName from '../view/page-name';
 import generateAllTracks from '../view/tracks';
@@ -109,11 +110,14 @@ export const switchPaginationPrev: () => Promise<void> = async (): Promise<void>
   await updatePage();
 };
 
-export const controlEngine: (event: Event) => Promise<EngineResponse> = async (
-  event: Event
-): Promise<EngineResponse> => {
+export const controlEngine: (
+  event: Event,
+  id: number
+) => Promise<{ responseEngine: EngineResponse; status: Status }> = async (
+  event: Event,
+  id: number
+): Promise<{ responseEngine: EngineResponse; status: Status }> => {
   const target: HTMLButtonElement = event.target as HTMLButtonElement;
-  const id = Number(target.value);
   let status: Status;
   if (target.classList.contains('start')) {
     status = 'started';
@@ -121,6 +125,19 @@ export const controlEngine: (event: Event) => Promise<EngineResponse> = async (
     status = 'stopped';
   }
   const responseEngine: EngineResponse = await controlEngineAPI(id, status);
-  animateCar(id, responseEngine);
-  return responseEngine;
+  return { responseEngine, status };
+};
+
+export const drive: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
+  const target: HTMLButtonElement = event.target as HTMLButtonElement;
+  const id = Number(target.value);
+  // const { velocity, distance } = await controlEngine(event, id);
+  const { responseEngine, status } = await controlEngine(event, id);
+  if (status === 'started') {
+    animateCar(id, responseEngine);
+    const { success } = await driveAPI(id);
+    if (!success) window.cancelAnimationFrame(getRequestID());
+  } else {
+    animateCar(id, responseEngine);
+  }
 };
