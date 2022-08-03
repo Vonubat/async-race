@@ -5,6 +5,7 @@ import {
   generateCars,
   race,
   removeCar,
+  reset,
   selectCar,
   switchPaginationNext,
   switchPaginationPrev,
@@ -77,7 +78,7 @@ export const setPrevBtnListener: () => void = (): void => {
 export const setStartBtnListener: () => void = (): void => {
   const startBtn: NodeListOf<HTMLElement> = document.querySelectorAll('.start');
   if (!startBtn.length) {
-    throw new Error("selectCarBtns doesn't exist");
+    throw new Error("startBtn doesn't exist");
   } else {
     Array.from(startBtn).forEach((item: HTMLElement): void => item.addEventListener('click', drive));
   }
@@ -86,7 +87,7 @@ export const setStartBtnListener: () => void = (): void => {
 export const setStopBtnListener: () => void = (): void => {
   const stopBtn: NodeListOf<HTMLElement> = document.querySelectorAll('.stop');
   if (!stopBtn.length) {
-    throw new Error("selectCarBtns doesn't exist");
+    throw new Error("stopBtn doesn't exist");
   } else {
     Array.from(stopBtn).forEach((item: HTMLElement): void => item.addEventListener('click', drive));
   }
@@ -95,9 +96,18 @@ export const setStopBtnListener: () => void = (): void => {
 export const setRaceBtnListener: () => void = (): void => {
   const raceBtn: HTMLElement | null = document.getElementById('race');
   if (!raceBtn) {
-    throw new Error("setPrevBtnGarage doesn't exist");
+    throw new Error("raceBtn doesn't exist");
   } else {
     raceBtn.addEventListener('click', race);
+  }
+};
+
+export const setResetBtnListener: () => void = (): void => {
+  const resetBtn: HTMLElement | null = document.getElementById('reset');
+  if (!resetBtn) {
+    throw new Error("resetBtn doesn't exist");
+  } else {
+    resetBtn.addEventListener('click', reset);
   }
 };
 
@@ -107,6 +117,7 @@ export const setAllEventListeners: () => void = (): void => {
     setCreateCarBtnListener();
     setUpdateCarBtnListener();
     setRaceBtnListener();
+    setResetBtnListener();
     setNextBtnListener();
     setPrevBtnListener();
     setSelectCarBtnsListener();

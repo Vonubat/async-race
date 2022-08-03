@@ -162,3 +162,7 @@ export const race: (event: Event) => Promise<void> = async (event: Event): Promi
     item.dispatchEvent(fakeEvenet);
   });
 };
+
+export const reset: () => Promise<void> = async (): Promise<void> => {
+  await updatePage();
+};
