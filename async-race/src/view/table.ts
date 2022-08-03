@@ -9,7 +9,6 @@ const createTable: () => HTMLTableElement = (): HTMLTableElement => {
     table.remove();
     table = document.createElement('table');
   }
-
   table.classList.add('table');
   table.id = 'track-container';
   return table as HTMLTableElement;
@@ -47,7 +46,7 @@ const generateTableHead: () => HTMLTableRowElement = (): HTMLTableRowElement => 
   const car: HTMLTableCellElement = createTH('Car');
   const name: HTMLTableCellElement = createTH('Name');
   const wins: HTMLTableCellElement = createTH('Wins');
-  const bestTime: HTMLTableCellElement = createTH('Best time (seconds)');
+  const bestTime: HTMLTableCellElement = createTH('Best time (s)');
   const tr: HTMLTableRowElement = createTR('table-head');
   tr.append(number, car, name, wins, bestTime);
 
@@ -64,7 +63,7 @@ const generateTableRow: (value: WinnerAndCar, position: number) => HTMLTableRowE
   car.append(SVG);
   const name: HTMLTableCellElement = createTD(`${value.car.name}`);
   const wins: HTMLTableCellElement = createTD(`${value.wins}`);
-  const bestTime: HTMLTableCellElement = createTD(`${value.time}s`);
+  const bestTime: HTMLTableCellElement = createTD(`${value.time}`);
   const tr: HTMLTableRowElement = createTR(`table-row-${value.id}`);
   tr.append(number, car, name, wins, bestTime);
 
