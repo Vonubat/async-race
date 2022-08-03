@@ -38,7 +38,7 @@ const createTrackLayout: () => HTMLDivElement = (): HTMLDivElement => {
 
 const createBtnStop: (value: Car) => HTMLButtonElement = (value: Car): HTMLButtonElement => {
   const btnStop: HTMLButtonElement = document.createElement('button');
-  btnStop.classList.add('stop');
+  btnStop.classList.add('stop', 'disabled');
   btnStop.innerText = 'STOP';
   btnStop.value = `${value.id}`;
   return btnStop;

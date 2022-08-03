@@ -17,7 +17,7 @@ import {
   setStartBtnListener,
   setStopBtnListener,
 } from '../utilities/set-event-listeners';
-import { animateCar, getRequestID } from '../view/animation';
+import { animateCar, requestIDStorage, stoppedAnimationStorage } from '../view/animation';
 import generatePageCounter from '../view/page-counter';
 import genearatePageName from '../view/page-name';
 import generateAllTracks from '../view/tracks';
@@ -72,6 +72,7 @@ export const selectCar: (event: Event) => Promise<void> = async (event: Event): 
   textInput.value = car.name;
   colorInput.value = car.color;
   updateBtn.value = `${id}`;
+  window.scrollTo(0, 0);
 };
 
 export const updateCar: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
@@ -121,8 +122,12 @@ export const controlEngine: (
   let status: Status;
   if (target.classList.contains('start')) {
     status = 'started';
+    target.classList.toggle('disabled');
+    target.nextElementSibling?.classList.toggle('disabled');
   } else {
     status = 'stopped';
+    target.classList.toggle('disabled');
+    target.previousElementSibling?.classList.toggle('disabled');
   }
   const responseEngine: EngineResponse = await controlEngineAPI(id, status);
   return { responseEngine, status };
@@ -134,10 +139,15 @@ export const drive: (event: Event) => Promise<void> = async (event: Event): Prom
   const { responseEngine, status } = await controlEngine(event, id);
   if (status === 'started') {
     animateCar(id, responseEngine);
+    stoppedAnimationStorage.delete(id);
     const { success } = await driveAPI(id);
-    if (!success) window.cancelAnimationFrame(getRequestID());
+    if (!success && !stoppedAnimationStorage.has(id)) {
+      window.cancelAnimationFrame(requestIDStorage.get(id) as number);
+    }
   } else {
-    window.cancelAnimationFrame(getRequestID());
     animateCar(id, responseEngine);
+    stoppedAnimationStorage.set(id, id);
   }
 };
+
+//
