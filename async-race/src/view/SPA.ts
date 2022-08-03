@@ -3,7 +3,6 @@ import getWinnersAPI from '../api/get-winners';
 import { CarsResponse, Page, WinnersResponse } from '../types/types';
 import disablePagination from '../utilities/disable-pagination';
 import { setAllEventListeners } from '../utilities/set-event-listeners';
-
 import generateGarage from './garage';
 import generateHeader from './header';
 import generateWinners from './winners';

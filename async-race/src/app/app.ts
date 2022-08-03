@@ -2,11 +2,13 @@
 import controlEngineAPI from '../api/control-engine';
 import createCarAPI from '../api/create-car';
 import deletetCarAPI from '../api/delete-car';
+import deleteWinnerAPI from '../api/delete-winner';
 import driveAPI from '../api/drive';
 import getCarAPI from '../api/get-car';
 import getCarsAPI from '../api/get-cars';
+import getWinnersAPI from '../api/get-winners';
 import updateCarAPI from '../api/update-car';
-import { Car, CarName, CarsResponse, Color, EngineResponse, Status } from '../types/types';
+import { Car, CarName, CarsResponse, Color, EngineResponse, Status, WinnersResponse } from '../types/types';
 import disablePagination from '../utilities/disable-pagination';
 import generate100Cars from '../utilities/generate-100cars';
 import generateCarBody from '../utilities/generate-car-body';
@@ -20,16 +22,27 @@ import {
 import { animateCar, requestIDStorage, stoppedAnimationStorage } from '../view/animation';
 import generatePageCounter from '../view/page-counter';
 import genearatePageName from '../view/page-name';
+import generateTable from '../view/table';
 import generateAllTracks from '../view/tracks';
 
 const updatePage: () => Promise<CarsResponse> = async (): Promise<CarsResponse> => {
   const carResponse: CarsResponse = await getCarsAPI(getPageCounter('Garage'));
+  const winnersResponse: WinnersResponse = await getWinnersAPI({
+    pageNumber: getPageCounter('Winners'),
+    sort: 'id',
+    order: 'ASC',
+  });
   try {
     genearatePageName(carResponse, 'Garage');
+    genearatePageName(winnersResponse, 'Winners');
     generatePageCounter('Garage');
+    generatePageCounter('Winners');
     disablePagination(carResponse, 'Garage');
+    disablePagination(winnersResponse, 'Winners');
     const placeForTrackContainer: HTMLElement | null = document.getElementById('page-counter-garage');
     placeForTrackContainer?.after(generateAllTracks(carResponse));
+    const placeForTable: HTMLElement | null = document.getElementById('page-counter-winners');
+    placeForTable?.after(generateTable(winnersResponse));
     setSelectCarBtnsListener();
     setRemoveCarBtnsListener();
     setStartBtnListener();
@@ -39,6 +52,10 @@ const updatePage: () => Promise<CarsResponse> = async (): Promise<CarsResponse> 
     console.log('json data is empty');
     return carResponse;
   }
+};
+
+const deleteWinner: (id: number) => Promise<void> = async (id: number): Promise<void> => {
+  await deleteWinnerAPI(id);
 };
 
 export const generateCars: () => Promise<void> = async (): Promise<void> => {
@@ -98,6 +115,7 @@ export const removeCar: (event: Event) => Promise<void> = async (event: Event): 
   const target: HTMLButtonElement = event.target as HTMLButtonElement;
   const id = Number(target.value);
   await deletetCarAPI(id);
+  await deleteWinner(id);
   await updatePage();
 };
 

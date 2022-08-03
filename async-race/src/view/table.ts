@@ -10,7 +10,7 @@ const createTable: () => HTMLTableElement = (): HTMLTableElement => {
     table = document.createElement('table');
   }
   table.classList.add('table');
-  table.id = 'track-container';
+  table.id = 'table';
   return table as HTMLTableElement;
 };
 

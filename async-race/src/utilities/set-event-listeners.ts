@@ -10,7 +10,7 @@ import {
   switchPaginationNext,
   switchPaginationPrev,
   updateCar,
-} from '../pages/garage';
+} from '../app/app';
 
 export const setGenerateCarsBtnListener: () => void = (): void => {
   const generateCarsBtn: HTMLElement | null = document.getElementById('genererate-cars');
