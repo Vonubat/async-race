@@ -64,6 +64,11 @@
   cursor: pointer;
 }
 
+.start:active,
+.stop:active {
+  transform: scale(95%);
+}
+
 .pagination {
   margin-top: 30px;
 }

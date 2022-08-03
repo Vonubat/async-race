@@ -1,15 +1,20 @@
 /* eslint-disable import/no-cycle */
+import controlEngineAPI from '../api/control-engine';
 import createCarAPI from '../api/create-car';
 import deletetCarAPI from '../api/delete-car';
 import getCarAPI from '../api/get-car';
 import getCarsAPI from '../api/get-cars';
 import updateCarAPI from '../api/update-car';
-import { Car, CarName, CarsResponse, Color } from '../types/types';
+import { Car, CarName, CarsResponse, Color, EngineResponse } from '../types/types';
 import disablePagination from '../utilities/disable-pagination';
 import generate100Cars from '../utilities/generate-100cars';
 import generateCarBody from '../utilities/generate-car-body';
 import { getPageCounter, setPageCounter } from '../utilities/get-set-page-counter';
-import { setRemoveCarBtnsListener, setSelectCarBtnsListener } from '../utilities/set-event-listeners';
+import {
+  setRemoveCarBtnsListener,
+  setSelectCarBtnsListener,
+  setStartBtnListener,
+} from '../utilities/set-event-listeners';
 import generatePageCounter from '../view/page-counter';
 import genearatePageName from '../view/page-name';
 import generateAllTracks from '../view/tracks';
@@ -24,6 +29,7 @@ const updatePage: () => Promise<CarsResponse> = async (): Promise<CarsResponse> 
     placeForTrackContainer?.after(generateAllTracks(carResponse));
     setSelectCarBtnsListener();
     setRemoveCarBtnsListener();
+    setStartBtnListener();
     return carResponse;
   } catch (error) {
     console.log('json data is empty');
@@ -98,4 +104,11 @@ export const switchPaginationNext: () => Promise<void> = async (): Promise<void>
 export const switchPaginationPrev: () => Promise<void> = async (): Promise<void> => {
   setPageCounter('Garage', '-');
   await updatePage();
+};
+
+export const startEngine: (event: Event) => Promise<EngineResponse> = async (event: Event): Promise<EngineResponse> => {
+  const target: HTMLButtonElement = event.target as HTMLButtonElement;
+  const id = Number(target.value);
+  const responseEngine: EngineResponse = await controlEngineAPI(id, 'started');
+  return responseEngine;
 };

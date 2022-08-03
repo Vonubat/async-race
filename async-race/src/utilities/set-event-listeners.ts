@@ -4,6 +4,7 @@ import {
   generateCars,
   removeCar,
   selectCar,
+  startEngine,
   switchPaginationNext,
   switchPaginationPrev,
   updateCar,
@@ -72,6 +73,15 @@ export const setPrevBtnListener: () => void = (): void => {
   }
 };
 
+export const setStartBtnListener: () => void = (): void => {
+  const setStartBtn: NodeListOf<HTMLElement> = document.querySelectorAll('.start');
+  if (!setStartBtn.length) {
+    throw new Error("selectCarBtns doesn't exist");
+  } else {
+    Array.from(setStartBtn).forEach((item: HTMLElement): void => item.addEventListener('click', startEngine));
+  }
+};
+
 export const setAllEventListeners: () => void = (): void => {
   try {
     setGenerateCarsBtnListener();
@@ -81,6 +91,7 @@ export const setAllEventListeners: () => void = (): void => {
     setPrevBtnListener();
     setSelectCarBtnsListener();
     setRemoveCarBtnsListener();
+    setStartBtnListener();
   } catch (error) {
     console.log('json data is empty');
   }

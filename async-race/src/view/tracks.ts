@@ -35,17 +35,19 @@ const createTrackLayout: () => HTMLDivElement = (): HTMLDivElement => {
   return trackLayout;
 };
 
-const createBtnStop: () => HTMLButtonElement = (): HTMLButtonElement => {
+const createBtnStop: (value: Car) => HTMLButtonElement = (value: Car): HTMLButtonElement => {
   const btnStop: HTMLButtonElement = document.createElement('button');
   btnStop.classList.add('stop');
   btnStop.innerText = 'STOP';
+  btnStop.value = `${value.id}`;
   return btnStop;
 };
 
-const createBtnStart: () => HTMLButtonElement = (): HTMLButtonElement => {
+const createBtnStart: (value: Car) => HTMLButtonElement = (value: Car): HTMLButtonElement => {
   const btnStart: HTMLButtonElement = document.createElement('button');
   btnStart.classList.add('start');
   btnStart.innerText = 'START';
+  btnStart.value = `${value.id}`;
   return btnStart;
 };
 
@@ -113,7 +115,7 @@ const generateTrack: (car: Car) => HTMLDivElement = (car: Car): HTMLDivElement =
   const carManipulation: HTMLDivElement = createCarManipulation();
   carManipulation.append(createBtnSelect(car), createBtnRemove(car));
   const engineControl: HTMLDivElement = createEngineControl();
-  engineControl.append(createBtnStart(), createBtnStop());
+  engineControl.append(createBtnStart(car), createBtnStop(car));
   const carName: HTMLSpanElement = createCarName(car);
   controlsContainer.append(carManipulation, engineControl, carName);
   const trackLayout: HTMLDivElement = createTrackLayout();
