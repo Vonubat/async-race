@@ -4,14 +4,17 @@ import { getCurrentPage } from '../utilities/get-set-page-counter';
 
 const createTable: () => HTMLTableElement = (): HTMLTableElement => {
   let table: HTMLElement | null = document.getElementById('table');
+
   if (!table) {
     table = document.createElement('table');
   } else {
     table.remove();
     table = document.createElement('table');
   }
+
   table.classList.add('table');
   table.id = 'table';
+
   return table as HTMLTableElement;
 };
 
@@ -34,10 +37,12 @@ const createTH: (value: string, cssClass?: string) => HTMLTableCellElement = (
 ): HTMLTableCellElement => {
   const th: HTMLTableCellElement = document.createElement('th');
   th.classList.add('th');
+
   if (cssClass !== undefined) {
     th.classList.add(cssClass);
     th.id = cssClass;
   }
+
   th.innerHTML = value;
   return th;
 };
@@ -56,6 +61,7 @@ const generateTableHead: () => HTMLTableRowElement = (): HTMLTableRowElement => 
   const wins: HTMLTableCellElement = createTH('Wins', 'wins');
   const bestTime: HTMLTableCellElement = createTH('Best time (s)', 'best-time');
   const tr: HTMLTableRowElement = createTR('table-head');
+
   tr.append(number, car, name, wins, bestTime);
 
   return tr;
@@ -73,6 +79,7 @@ const generateTableRow: (value: WinnerAndCar, position: number) => HTMLTableRowE
   const wins: HTMLTableCellElement = createTD(`${value.wins}`);
   const bestTime: HTMLTableCellElement = createTD(`${value.time}`);
   const tr: HTMLTableRowElement = createTR(`table-row-${value.id}`);
+
   tr.append(number, car, name, wins, bestTime);
 
   return tr;
@@ -90,9 +97,11 @@ export const generateTable: (value: WinnersResponse) => HTMLTableElement = (
 
   table.append(tbody);
   tbody.appendChild(tableHead);
+
   value.items.forEach((item: WinnerAndCar, index: number): void =>
     tbody.append(generateTableRow(item, position(index)))
   );
+
   return table;
 };
 
@@ -101,6 +110,7 @@ export const updateSortOrderIndicator: (sort: Sort, order: Order) => void = (sor
   const bestTime: HTMLTableCellElement = document.getElementById('best-time') as HTMLTableCellElement;
   const arrowDown = '&#9660';
   const arrowUp = '&#9650';
+
   if (sort === 'wins') {
     if (order === 'DESC') {
       wins.innerHTML = `Wins ${arrowDown}`;

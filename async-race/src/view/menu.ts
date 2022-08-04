@@ -1,3 +1,5 @@
+import createBtn from '../utilities/create-btn';
+
 const createMenu: () => HTMLDivElement = (): HTMLDivElement => {
   const menu: HTMLDivElement = document.createElement('div');
   menu.classList.add('menu');
@@ -46,22 +48,6 @@ const createBtnGenerateCars: () => HTMLButtonElement = (): HTMLButtonElement => 
   return btnGenerateCars;
 };
 
-const createBtnCreate: () => HTMLButtonElement = (): HTMLButtonElement => {
-  const btnCreate: HTMLButtonElement = document.createElement('button');
-  btnCreate.classList.add('button');
-  btnCreate.id = 'create-btn';
-  btnCreate.innerText = 'CREATE';
-  return btnCreate;
-};
-
-const createBtnUpdate: () => HTMLButtonElement = (): HTMLButtonElement => {
-  const btnUpdate: HTMLButtonElement = document.createElement('button');
-  btnUpdate.classList.add('button', 'disabled');
-  btnUpdate.id = 'update-btn';
-  btnUpdate.innerText = 'UPDATE';
-  return btnUpdate;
-};
-
 const createInputCreateText: () => HTMLInputElement = (): HTMLInputElement => {
   const inputCreateText: HTMLInputElement = document.createElement('input');
   inputCreateText.classList.add('create-text');
@@ -101,9 +87,9 @@ const createInputUpdateColor: () => HTMLInputElement = (): HTMLInputElement => {
 const generateMenu: () => HTMLDivElement = (): HTMLDivElement => {
   const menu: HTMLDivElement = createMenu();
   const createCar: HTMLDivElement = createCreateCar();
-  createCar.append(createInputCreateText(), createInputCreateColor(), createBtnCreate());
+  createCar.append(createInputCreateText(), createInputCreateColor(), createBtn('create-btn', 'CREATE'));
   const updateCar: HTMLDivElement = createUpdateCar();
-  updateCar.append(createInputUpdateText(), createInputUpdateColor(), createBtnUpdate());
+  updateCar.append(createInputUpdateText(), createInputUpdateColor(), createBtn('update-btn', 'UPDATE', true));
   const raceControls: HTMLDivElement = createRaceControls();
   raceControls.append(createBtnRace(), createBtnReset(), createBtnGenerateCars());
   menu.append(createCar, updateCar, raceControls);

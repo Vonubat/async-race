@@ -7,13 +7,12 @@ import driveAPI from '../api/drive';
 import getCarAPI from '../api/get-car';
 import saveWinnerAPI from '../api/save-winner';
 import updateCarAPI from '../api/update-car';
-import { Actions, Car, CarName, Color, DrivingResult, EngineResponse, Page, Status } from '../types/types';
+import { Actions, Car, DrivingResult, EmptyPromiseReturnFn, EngineResponse, Page, Status } from '../types/types';
 import generate100Cars from '../utilities/generate-100cars';
 import generateCarBody from '../utilities/generate-car-body';
 import { deleteModalWindow, generateModalWindow } from '../utilities/generate-modal-window';
-import { getButtonProp, getElementId } from '../utilities/get-elements';
+import { getButtonProp, getCreateElementsProp, getElementId, getUpdateElementsProp } from '../utilities/get-elements';
 import getPage from '../utilities/get-page';
-
 import { setPageCounter } from '../utilities/get-set-page-counter';
 import { getOrder, setOrder, setSort } from '../utilities/get-set-sort-order';
 import updatePage from '../utilities/update-page';
@@ -23,19 +22,13 @@ const deleteWinner: (id: number) => Promise<void> = async (id: number): Promise<
   await deleteWinnerAPI(id);
 };
 
-export const generateCars: () => Promise<void> = async (): Promise<void> => {
+export const generateCars: EmptyPromiseReturnFn = async (): Promise<void> => {
   await generate100Cars();
   await updatePage('Garage');
 };
 
-export const createCar: () => Promise<void> = async (): Promise<void> => {
-  const textInput: HTMLInputElement | null = document.getElementById('create-text') as HTMLInputElement | null;
-  const colorInput: HTMLInputElement | null = document.getElementById('create-color') as HTMLInputElement | null;
-  if (!textInput || !colorInput) {
-    throw new Error("textInput || colorInput doesn't exist");
-  }
-  const name: CarName = textInput.value as CarName;
-  const color: Color = colorInput.value as Color;
+export const createCar: EmptyPromiseReturnFn = async (): Promise<void> => {
+  const { name, color } = getCreateElementsProp();
   await createCarAPI(generateCarBody(name, color));
   await updatePage('Garage');
 };
@@ -43,34 +36,27 @@ export const createCar: () => Promise<void> = async (): Promise<void> => {
 export const selectCar: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
   const { carId } = getButtonProp(event);
   const car: Car = await getCarAPI(carId);
-  const textInput: HTMLInputElement | null = document.getElementById('update-text') as HTMLInputElement | null;
-  const colorInput: HTMLInputElement | null = document.getElementById('update-color') as HTMLInputElement | null;
-  const updateBtn: HTMLButtonElement | null = document.getElementById('update-btn') as HTMLButtonElement | null;
-  if (!textInput || !colorInput || !updateBtn) {
-    throw new Error("textInput || colorInput doesn't exist");
-  }
+  const { textInput, colorInput, updateBtn } = getUpdateElementsProp();
+
   updateBtn.classList.remove('disabled');
   textInput.value = car.name;
   colorInput.value = car.color;
   updateBtn.value = `${carId}`;
+
   window.scrollTo(0, 0);
 };
 
 export const updateCar: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
   const { carId } = getButtonProp(event);
-  const textInput: HTMLInputElement | null = document.getElementById('update-text') as HTMLInputElement | null;
-  const colorInput: HTMLInputElement | null = document.getElementById('update-color') as HTMLInputElement | null;
-  const updateBtn: HTMLButtonElement | null = document.getElementById('update-btn') as HTMLButtonElement | null;
-  if (!textInput || !colorInput || !updateBtn) {
-    throw new Error("textInput || colorInput doesn't exist");
-  }
-  const name: CarName = textInput.value as CarName;
-  const color: Color = colorInput.value as Color;
+  const { textInput, colorInput, updateBtn, name, color } = getUpdateElementsProp();
+
   await updateCarAPI(carId, generateCarBody(name, color));
+
   textInput.value = '';
   colorInput.value = '#FFFFFF';
   updateBtn.value = '';
   updateBtn.classList.add('disabled');
+
   await updatePage('Garage');
 };
 
@@ -86,6 +72,7 @@ export const switchPagination: (event: Event) => Promise<void> = async (event: E
   const { target } = getButtonProp(event);
   let page: Page;
   let action: Actions;
+
   if (target.id.includes('garage')) {
     page = 'Garage';
   } else {
@@ -97,6 +84,7 @@ export const switchPagination: (event: Event) => Promise<void> = async (event: E
   } else {
     action = '-';
   }
+
   setPageCounter(page, action);
   await updatePage(page);
 };
@@ -109,6 +97,7 @@ export const controlEngine: (
   carId: number
 ): Promise<{ responseEngine: EngineResponse; status: Status }> => {
   let status: Status;
+
   if (target.classList.contains('start')) {
     status = 'started';
     target.classList.toggle('disabled');
@@ -118,6 +107,7 @@ export const controlEngine: (
     target.classList.toggle('disabled');
     target.previousElementSibling?.classList.toggle('disabled');
   }
+
   const responseEngine: EngineResponse = await controlEngineAPI(carId, status);
   return { responseEngine, status };
 };
@@ -125,11 +115,12 @@ export const controlEngine: (
 export const drive: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
   const { target, carId } = getButtonProp(event);
   const { responseEngine, status } = await controlEngine(target, carId);
-  //
+
   if (status === 'started') {
     animateCar(carId, responseEngine);
     stoppedAnimationStorage.delete(carId);
     const { success } = await driveAPI(carId);
+
     if (!success && !stoppedAnimationStorage.has(carId)) {
       window.cancelAnimationFrame(requestIDStorage.get(carId) as number);
     }
@@ -144,6 +135,7 @@ export const race: (event: Event) => Promise<void> = async (event: Event): Promi
   const target: HTMLButtonElement = event.target as HTMLButtonElement;
   target.classList.add('disabled');
   target.nextElementSibling?.classList.toggle('disabled');
+
   const members: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.start');
   const promises: Promise<DrivingResult | undefined>[] = Array.from(members).map(
     async (member: HTMLButtonElement): Promise<DrivingResult | undefined> => {
@@ -163,26 +155,29 @@ export const race: (event: Event) => Promise<void> = async (event: Event): Promi
     }
   );
   Promise.any(promises)
-    .then(async (value: DrivingResult | undefined) => {
-      target.classList.remove('disabled');
-      target.nextElementSibling?.classList.toggle('disabled');
-      const { carId, time } = value as DrivingResult;
-      await saveWinnerAPI({ id: carId, time });
-      await generateModalWindow({ id: carId, time });
-      setTimeout(deleteModalWindow, 2000);
-      await updatePage('Winners');
-    })
-    .catch((err) => {
+    .then(
+      async (value: DrivingResult | undefined): Promise<void> => {
+        target.classList.remove('disabled');
+        target.nextElementSibling?.classList.toggle('disabled');
+        const { carId, time } = value as DrivingResult;
+        await saveWinnerAPI({ id: carId, time });
+        await generateModalWindow({ id: carId, time });
+        setTimeout(deleteModalWindow, 2000);
+        await updatePage('Winners');
+      }
+    )
+    .catch((err: Error): void => {
       console.log(`${err} => all cars broken`);
     });
 };
 
-export const reset: () => Promise<void> = async (): Promise<void> => {
+export const reset: EmptyPromiseReturnFn = async (): Promise<void> => {
   await updatePage('Garage');
 };
 
 export const sortOrder: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
   const id: string = getElementId(event);
+
   if (id.includes('wins')) {
     setSort('wins');
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -192,6 +187,7 @@ export const sortOrder: (event: Event) => Promise<void> = async (event: Event): 
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     getOrder() === 'ASC' ? setOrder('DESC') : setOrder('ASC');
   }
+
   await updatePage('Winners');
 };
 
@@ -199,6 +195,7 @@ export const goToPage: (event: Event) => void = (event: Event): void => {
   const id: string = getElementId(event);
   const pageGarage: HTMLDivElement = getPage('Garage');
   const pageWinners: HTMLDivElement = getPage('Winners');
+
   if (id.includes('garage')) {
     pageGarage.style.display = 'block';
     pageWinners.style.display = 'none';

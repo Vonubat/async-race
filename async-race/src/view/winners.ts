@@ -21,6 +21,7 @@ const generateWinners: (page: Page, value: WinnersResponse) => HTMLElement = (
   const pagination: HTMLDivElement = generatePagination(page, value);
   winners.append(pageName, table, pagination);
   winners.style.display = 'none';
+
   return winners;
 };
 

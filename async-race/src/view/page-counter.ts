@@ -8,6 +8,7 @@ const generatePageCounter: (page: Page, value: CarsResponse | WinnersResponse) =
   let pageCounter: HTMLSpanElement | null = document.getElementById(`page-counter-${page.toLocaleLowerCase()}`);
   const currentPage = getCurrentPage(page);
   const lastPage = getLastPage(page, value);
+
   if (!pageCounter) {
     pageCounter = document.createElement('span');
     pageCounter.classList.add('page-counter');

@@ -114,9 +114,11 @@ const generateTrack: (car: Car) => HTMLDivElement = (car: Car): HTMLDivElement =
 const generateAllTracks: (value: CarsResponse) => HTMLDivElement = (value: CarsResponse): HTMLDivElement => {
   const cars: CarsResponse = value;
   const allTrackGeneration: HTMLDivElement = createTrackContainer();
+
   cars.items.forEach((item: Car): void => {
     allTrackGeneration.append(generateTrack(item));
   });
+
   return allTrackGeneration;
 };
 

@@ -21,6 +21,7 @@ const generateGarage: (page: Page, value: CarsResponse) => HTMLElement = (
   const tracks: HTMLDivElement = generateAllTracks(value);
   const pagination: HTMLDivElement = generatePagination(page, value);
   garage.append(menu, pageName, tracks, pagination);
+
   return garage;
 };
 

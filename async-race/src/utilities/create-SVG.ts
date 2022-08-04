@@ -8,6 +8,7 @@ export const createCarSVG: (value: Car, sizes: SVGSizes) => SVGSVGElement = (
   const XLINK_NS = 'http://www.w3.org/1999/xlink';
   const iconType: number = value.id % 4;
   const { width, height } = sizes;
+
   const svg: SVGSVGElement = document.createElementNS(SVG_NS, 'svg');
   svg.id = `car-${value.id}`;
   svg.style.fill = `${value.color}`;
@@ -19,7 +20,6 @@ export const createCarSVG: (value: Car, sizes: SVGSizes) => SVGSVGElement = (
   use.setAttributeNS(XLINK_NS, 'href', `./assets/sprite.svg#car-${iconType}`);
 
   svg.append(use);
-
   return svg;
 };
 
@@ -31,6 +31,7 @@ export const createIconSVG: (name: string, sizes: SVGSizes, color: Color) => SVG
   const SVG_NS = 'http://www.w3.org/2000/svg';
   const XLINK_NS = 'http://www.w3.org/1999/xlink';
   const { width, height } = sizes;
+
   const svg: SVGSVGElement = document.createElementNS(SVG_NS, 'svg');
   svg.id = `${name}`;
   svg.classList.add(`${name}`);
@@ -43,6 +44,5 @@ export const createIconSVG: (name: string, sizes: SVGSizes, color: Color) => SVG
   use.setAttributeNS(XLINK_NS, 'href', `./assets/${name}.svg#${name}`);
 
   svg.append(use);
-
   return svg;
 };

@@ -146,3 +146,39 @@ export interface GetButtonPropFn {
     carId: number;
   };
 }
+
+export interface GetCreateElementsPropFn {
+  (): {
+    name: CarName;
+    color: Color;
+  };
+}
+
+export interface GetUpdateElementsFn {
+  (): {
+    textInput: HTMLInputElement;
+    colorInput: HTMLInputElement;
+    updateBtn: HTMLButtonElement;
+    name: CarName;
+    color: Color;
+  };
+}
+
+export interface GetPaginationElementsFn {
+  (page: Page): {
+    paginationNextBtn: HTMLElement;
+    paginationPrevBtn: HTMLElement;
+  };
+}
+
+export interface EmptyReturnFn {
+  (): void;
+}
+
+export interface EmptyPromiseReturnFn {
+  (): Promise<void>;
+}
+
+export interface CreateBtnFn {
+  (id: string, innerText: string, disabled?: boolean): HTMLButtonElement;
+}

@@ -6,6 +6,7 @@ let conterWinners = 1;
 
 export const setPageCounter: (page: Page, action: Actions) => number = (page: Page, action: Actions): number => {
   let currentCounter: number;
+
   if (action === '+') {
     currentCounter = page === 'Garage' ? (conterGarage += 1) : (conterWinners += 1);
   } else {
@@ -25,6 +26,7 @@ export const getLastPage: (page: Page, value: CarsResponse | WinnersResponse) =>
   value: CarsResponse | WinnersResponse
 ): number => {
   let lastPage: number;
+
   if (page === 'Garage') {
     lastPage = Math.ceil(Number(value.count) / GARAGE_LIMIT);
   } else {

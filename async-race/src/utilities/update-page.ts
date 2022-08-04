@@ -14,14 +14,14 @@ import {
   setRemoveCarBtnsListener,
   setSelectCarBtnsListener,
   setSortOrderListener,
-  setStartBtnListener,
-  setStopBtnListener,
+  setStartStopBtnsListener,
 } from './set-event-listeners';
 
 const updatePage: (page: Page) => Promise<CarsResponse | WinnersResponse> = async (
   page: Page
 ): Promise<CarsResponse | WinnersResponse> => {
   let response: CarsResponse | WinnersResponse;
+
   if (page === 'Garage') {
     response = await getCarsAPI(getCurrentPage(page));
   } else {
@@ -31,6 +31,7 @@ const updatePage: (page: Page) => Promise<CarsResponse | WinnersResponse> = asyn
       order: getOrder(),
     });
   }
+
   try {
     generatePageName(page, response);
     generatePageCounter(page, response);
@@ -40,8 +41,7 @@ const updatePage: (page: Page) => Promise<CarsResponse | WinnersResponse> = asyn
       placeForElement?.after(generateAllTracks(response as CarsResponse));
       setSelectCarBtnsListener();
       setRemoveCarBtnsListener();
-      setStartBtnListener();
-      setStopBtnListener();
+      setStartStopBtnsListener();
     } else {
       placeForElement?.after(generateTable(response as WinnersResponse));
       setSortOrderListener();

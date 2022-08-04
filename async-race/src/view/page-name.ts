@@ -5,6 +5,7 @@ const generatePageName: (page: Page, value: CarsResponse | WinnersResponse) => H
   value: CarsResponse | WinnersResponse
 ): HTMLSpanElement => {
   let pageName: HTMLElement | null = document.getElementById(`page-name-${page.toLocaleLowerCase()}`);
+
   if (!pageName) {
     pageName = document.createElement('span');
     pageName.classList.add('page-name', 'text');
@@ -13,6 +14,7 @@ const generatePageName: (page: Page, value: CarsResponse | WinnersResponse) => H
   } else {
     pageName.innerText = `${page} [${value.count}]`;
   }
+
   return pageName;
 };
 

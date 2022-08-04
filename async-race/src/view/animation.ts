@@ -21,6 +21,7 @@ export const animateCar: (id: number, value: EngineResponse) => void = (id: numb
   let startTimeStamp: number;
   let previousTimeStamp: number;
   let done = false;
+
   const getStep: (timestamp: number) => void = (timestamp: number): void => {
     if (!startTimeStamp) {
       startTimeStamp = timestamp;
@@ -43,6 +44,7 @@ export const animateCar: (id: number, value: EngineResponse) => void = (id: numb
       }
     }
   };
+
   requestIDStorage.set(id, window.requestAnimationFrame(getStep));
 };
 

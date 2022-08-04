@@ -8,10 +8,10 @@ const getRandomColor: GetRandomColorFn = (): Color => {
   const G: number = rgbValueGenerator();
   const B: number = rgbValueGenerator();
   let randomColor: Color = `#${R.toString(16)}${G.toString(16)}${B.toString(16)}`;
-  // console.log(randomColor);
   if (randomColor.length < HEX_LENGTH) {
     randomColor = getRandomColor();
   }
+
   return randomColor;
 };
 
