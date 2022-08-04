@@ -57,6 +57,12 @@ export interface WinnerParam {
   order: Order;
 }
 
+export interface DrivingResult {
+  success: boolean;
+  carId: number;
+  time: number;
+}
+
 // param types
 export type Status = 'started' | 'stopped';
 export type Sort = 'id' | 'wins' | 'time';

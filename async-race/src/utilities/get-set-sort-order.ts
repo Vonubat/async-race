@@ -14,11 +14,9 @@ export const setOrder: (value: Order) => Order = (value: Order): Order => {
 };
 
 export const getSort: () => Sort = (): Sort => {
-  console.log(sort);
   return sort;
 };
 
 export const getOrder: () => Order = (): Order => {
-  console.log(order);
   return order;
 };

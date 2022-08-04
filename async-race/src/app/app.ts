@@ -5,8 +5,9 @@ import deletetCarAPI from '../api/delete-car';
 import deleteWinnerAPI from '../api/delete-winner';
 import driveAPI from '../api/drive';
 import getCarAPI from '../api/get-car';
+import saveWinnerAPI from '../api/save-winner';
 import updateCarAPI from '../api/update-car';
-import { Actions, Car, CarName, Color, EngineResponse, Page, Status } from '../types/types';
+import { Actions, Car, CarName, Color, DrivingResult, EngineResponse, Page, Status } from '../types/types';
 import generate100Cars from '../utilities/generate-100cars';
 import generateCarBody from '../utilities/generate-car-body';
 import { getButtonProp, getElementId } from '../utilities/get-elements';
@@ -118,9 +119,15 @@ export const controlEngine: (
   return { responseEngine, status };
 };
 
+// export const win: (carId: number, time: number) => Promise<void> = async (
+//   carId: number,
+//   time: number
+// ): Promise<void> => {};
+
 export const drive: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
   const { target, carId } = getButtonProp(event);
   const { responseEngine, status } = await controlEngine(target, carId);
+  //
   if (status === 'started') {
     animateCar(carId, responseEngine);
     stoppedAnimationStorage.delete(carId);
@@ -128,9 +135,6 @@ export const drive: (event: Event) => Promise<void> = async (event: Event): Prom
     if (!success && !stoppedAnimationStorage.has(carId)) {
       window.cancelAnimationFrame(requestIDStorage.get(carId) as number);
     }
-    // if (success) {
-    //   return success;
-    // }
   } else {
     animateCar(carId, responseEngine);
     stoppedAnimationStorage.set(carId, carId);
@@ -142,13 +146,36 @@ export const race: (event: Event) => Promise<void> = async (event: Event): Promi
   const target: HTMLButtonElement = event.target as HTMLButtonElement;
   target.classList.add('disabled');
   target.nextElementSibling?.classList.toggle('disabled');
-  // const members: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.start');
-  // Promise.all(
-  //   Array.from(members).forEach((item: HTMLButtonElement): void => {
-  //     const fakeEvenet = new MouseEvent('click');
-  //     item.dispatchEvent(fakeEvenet);
-  //   })
-  // );
+  const members: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.start');
+  const promises: Promise<DrivingResult | undefined>[] = Array.from(members).map(
+    async (member: HTMLButtonElement): Promise<DrivingResult | undefined> => {
+      const carId = Number(member.value);
+      const { responseEngine } = await controlEngine(member, carId);
+      const time: number = Math.round(responseEngine.distance / responseEngine.velocity) / 1000;
+      animateCar(carId, responseEngine);
+      stoppedAnimationStorage.delete(carId);
+      const { success } = await driveAPI(carId);
+      if (!success && !stoppedAnimationStorage.has(carId)) {
+        window.cancelAnimationFrame(requestIDStorage.get(carId) as number);
+      }
+      if (success) {
+        return { success, carId, time };
+      }
+      return Promise.reject(new Error(`car starts: #${carId}`));
+    }
+  );
+  Promise.any(promises)
+    .then(async (value: DrivingResult | undefined) => {
+      console.log(value);
+      target.classList.remove('disabled');
+      target.nextElementSibling?.classList.toggle('disabled');
+      const { carId, time } = value as DrivingResult;
+      await saveWinnerAPI({ id: carId, time });
+      await updatePage('Winners');
+    })
+    .catch((err) => {
+      console.log(`${err} => all cars broken`);
+    });
 };
 
 export const reset: () => Promise<void> = async (): Promise<void> => {
