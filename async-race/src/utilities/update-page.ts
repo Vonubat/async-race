@@ -8,7 +8,7 @@ import generatePageName from '../view/page-name';
 import generateTable from '../view/table';
 import generateAllTracks from '../view/tracks';
 import disablePagination from './disable-pagination';
-import { getPageCounter } from './get-set-page-counter';
+import { getCurrentPage } from './get-set-page-counter';
 import {
   setRemoveCarBtnsListener,
   setSelectCarBtnsListener,
@@ -21,19 +21,19 @@ const updatePage: (page: Page) => Promise<CarsResponse | WinnersResponse> = asyn
 ): Promise<CarsResponse | WinnersResponse> => {
   let response: CarsResponse | WinnersResponse;
   if (page === 'Garage') {
-    response = await getCarsAPI(getPageCounter(page));
+    response = await getCarsAPI(getCurrentPage(page));
   } else {
     response = await getWinnersAPI({
-      pageNumber: getPageCounter(page),
+      pageNumber: getCurrentPage(page),
       sort: 'id',
       order: 'ASC',
     });
   }
   try {
-    generatePageName(response, page);
-    generatePageCounter(page);
-    disablePagination(response, page);
-    const placeForElement: HTMLElement | null = document.getElementById(`page-counter-${page.toLocaleLowerCase()}`);
+    generatePageName(page, response);
+    generatePageCounter(page, response);
+    disablePagination(page, response);
+    const placeForElement: HTMLElement | null = document.getElementById(`page-name-${page.toLocaleLowerCase()}`);
     if (page === 'Garage') {
       placeForElement?.after(generateAllTracks(response as CarsResponse));
       setSelectCarBtnsListener();

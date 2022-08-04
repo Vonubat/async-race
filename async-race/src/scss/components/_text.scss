@@ -8,13 +8,16 @@
   font-weight: 700;
   @include text();
   margin-top: 50px;
+  margin-bottom: 30px;
 }
 
 .page-counter {
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 500;
+  background: maroon;
+  border-radius: 3px;
+  padding: 5px;
   @include text();
-  margin-top: 20px;
 }
 
 .car-name {

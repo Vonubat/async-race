@@ -1,6 +1,5 @@
 import { CarsResponse, Page } from '../types/types';
 import generateMenu from './menu';
-import generatePageCounter from './page-counter';
 import generatePageName from './page-name';
 import generatePagination from './pagination';
 import generateAllTracks from './tracks';
@@ -12,17 +11,16 @@ const createGarage: () => HTMLElement = (): HTMLElement => {
   return garage;
 };
 
-const generateGarage: (value: CarsResponse, page: Page) => HTMLElement = (
-  value: CarsResponse,
-  page: Page
+const generateGarage: (page: Page, value: CarsResponse) => HTMLElement = (
+  page: Page,
+  value: CarsResponse
 ): HTMLElement => {
   const garage: HTMLElement = createGarage();
   const menu: HTMLDivElement = generateMenu();
-  const pageName: HTMLSpanElement = generatePageName(value, page);
-  const pageCounter: HTMLSpanElement = generatePageCounter(page);
+  const pageName: HTMLSpanElement = generatePageName(page, value);
   const tracks: HTMLDivElement = generateAllTracks(value);
-  const pagination: HTMLDivElement = generatePagination(page);
-  garage.append(menu, pageName, pageCounter, tracks, pagination);
+  const pagination: HTMLDivElement = generatePagination(page, value);
+  garage.append(menu, pageName, tracks, pagination);
   return garage;
 };
 

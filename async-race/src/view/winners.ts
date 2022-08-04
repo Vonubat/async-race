@@ -1,5 +1,5 @@
 import { Page, WinnersResponse } from '../types/types';
-import generatePageCounter from './page-counter';
+
 import generatePageName from './page-name';
 import generatePagination from './pagination';
 import generateTable from './table';
@@ -11,16 +11,15 @@ const createWinners: () => HTMLElement = (): HTMLElement => {
   return winners;
 };
 
-const generateWinners: (value: WinnersResponse, page: Page) => HTMLElement = (
-  value: WinnersResponse,
-  page: Page
+const generateWinners: (page: Page, value: WinnersResponse) => HTMLElement = (
+  page: Page,
+  value: WinnersResponse
 ): HTMLElement => {
   const winners: HTMLElement = createWinners();
-  const pageName: HTMLSpanElement = generatePageName(value, page);
-  const pageCounter: HTMLSpanElement = generatePageCounter(page);
+  const pageName: HTMLSpanElement = generatePageName(page, value);
   const table: HTMLTableElement = generateTable(value);
-  const pagination: HTMLDivElement = generatePagination(page);
-  winners.append(pageName, pageCounter, table, pagination);
+  const pagination: HTMLDivElement = generatePagination(page, value);
+  winners.append(pageName, table, pagination);
   return winners;
 };
 

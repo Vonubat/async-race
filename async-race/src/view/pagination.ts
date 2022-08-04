@@ -1,4 +1,5 @@
-import { Page } from '../types/types';
+import { CarsResponse, Page, WinnersResponse } from '../types/types';
+import generatePageCounter from './page-counter';
 
 const createPagination: (page: Page) => HTMLDivElement = (page: Page): HTMLDivElement => {
   const pagination: HTMLDivElement = document.createElement('div');
@@ -23,9 +24,12 @@ const createBtnNext: (page: Page) => HTMLButtonElement = (page: Page): HTMLButto
   return btnNext;
 };
 
-const generatePagination: (page: Page) => HTMLDivElement = (page: Page): HTMLDivElement => {
+const generatePagination: (page: Page, value: CarsResponse | WinnersResponse) => HTMLDivElement = (
+  page: Page,
+  value: CarsResponse | WinnersResponse
+): HTMLDivElement => {
   const pagination: HTMLDivElement = createPagination(page);
-  pagination.append(createBtnPrev(page), createBtnNext(page));
+  pagination.append(createBtnPrev(page), generatePageCounter(page, value), createBtnNext(page));
   return pagination;
 };
 

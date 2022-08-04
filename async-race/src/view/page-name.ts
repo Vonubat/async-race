@@ -1,8 +1,8 @@
 import { CarsResponse, Page, WinnersResponse } from '../types/types';
 
-const generatePageName: (value: CarsResponse | WinnersResponse, page: Page) => HTMLSpanElement = (
-  value: CarsResponse | WinnersResponse,
-  page: Page
+const generatePageName: (page: Page, value: CarsResponse | WinnersResponse) => HTMLSpanElement = (
+  page: Page,
+  value: CarsResponse | WinnersResponse
 ): HTMLSpanElement => {
   let pageName: HTMLElement | null = document.getElementById(`page-name-${page.toLocaleLowerCase()}`);
   if (!pageName) {

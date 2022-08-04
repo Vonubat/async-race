@@ -1,5 +1,6 @@
 import { WinnerAndCar, WinnersResponse } from '../types/types';
 import createSVG from '../utilities/create-SVG';
+import { getCurrentPage } from '../utilities/get-set-page-counter';
 
 const createTable: () => HTMLTableElement = (): HTMLTableElement => {
   let table: HTMLElement | null = document.getElementById('table');
@@ -71,12 +72,18 @@ const generateTableRow: (value: WinnerAndCar, position: number) => HTMLTableRowE
 };
 
 const generateTable: (value: WinnersResponse) => HTMLTableElement = (value: WinnersResponse): HTMLTableElement => {
+  const position: (currentValue: number) => number = (currentValue: number): number =>
+    (getCurrentPage('Winners') - 1) * 10 + currentValue + 1;
+
   const table: HTMLTableElement = createTable();
   const tbody: HTMLTableSectionElement = createTBody();
   const tableHead: HTMLTableRowElement = generateTableHead();
+
   table.append(tbody);
   tbody.appendChild(tableHead);
-  value.items.forEach((item: WinnerAndCar, index: number): void => tbody.append(generateTableRow(item, index)));
+  value.items.forEach((item: WinnerAndCar, index: number): void =>
+    tbody.append(generateTableRow(item, position(index)))
+  );
   return table;
 };
 

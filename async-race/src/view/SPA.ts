@@ -17,9 +17,9 @@ const generateSPA: () => Promise<HTMLElement> = async (): Promise<HTMLElement> =
   const winnersPage: Page = 'Winners';
   const carResponse: CarsResponse = await getCarsAPI(startPage);
   const winnersResponse: WinnersResponse = await getWinnersAPI({ pageNumber: startPage, sort: 'id', order: 'ASC' });
-  body.append(generateHeader(), generateGarage(carResponse, garagePage), generateWinners(winnersResponse, winnersPage));
+  body.append(generateHeader(), generateGarage(garagePage, carResponse), generateWinners(winnersPage, winnersResponse));
   setAllEventListeners();
-  disablePagination(carResponse, garagePage);
+  disablePagination(garagePage, carResponse);
   return body;
 };
 

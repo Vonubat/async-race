@@ -1,4 +1,5 @@
-import { Actions, Page } from '../types/types';
+import { GARAGE_LIMIT, WINNERS_LIMIT } from '../api/variables';
+import { Actions, CarsResponse, Page, WinnersResponse } from '../types/types';
 
 let conterGarage = 1;
 let conterWinners = 1;
@@ -14,7 +15,21 @@ export const setPageCounter: (page: Page, action: Actions) => number = (page: Pa
   return currentCounter;
 };
 
-export const getPageCounter: (page: Page) => number = (page: Page): number => {
+export const getCurrentPage: (page: Page) => number = (page: Page): number => {
   const currentCounter: number = page === 'Garage' ? conterGarage : conterWinners;
   return currentCounter;
+};
+
+export const getLastPage: (page: Page, value: CarsResponse | WinnersResponse) => number = (
+  page: Page,
+  value: CarsResponse | WinnersResponse
+): number => {
+  let lastPage: number;
+  if (page === 'Garage') {
+    lastPage = Math.ceil(Number(value.count) / GARAGE_LIMIT);
+  } else {
+    lastPage = Math.ceil(Number(value.count) / WINNERS_LIMIT);
+  }
+
+  return lastPage;
 };

@@ -1,15 +1,20 @@
-import { Page } from '../types/types';
-import { getPageCounter } from '../utilities/get-set-page-counter';
+import { CarsResponse, Page, WinnersResponse } from '../types/types';
+import { getCurrentPage, getLastPage } from '../utilities/get-set-page-counter';
 
-const generatePageCounter: (page: Page) => HTMLSpanElement = (page: Page): HTMLSpanElement => {
+const generatePageCounter: (page: Page, value: CarsResponse | WinnersResponse) => HTMLSpanElement = (
+  page: Page,
+  value: CarsResponse | WinnersResponse
+): HTMLSpanElement => {
   let pageCounter: HTMLSpanElement | null = document.getElementById(`page-counter-${page.toLocaleLowerCase()}`);
+  const currentPage = getCurrentPage(page);
+  const lastPage = getLastPage(page, value);
   if (!pageCounter) {
     pageCounter = document.createElement('span');
-    pageCounter.classList.add('page-counter', 'text');
+    pageCounter.classList.add('page-counter');
     pageCounter.id = `page-counter-${page.toLocaleLowerCase()}`;
-    pageCounter.innerText = `Page #${getPageCounter(page)}`;
+    pageCounter.innerText = `${currentPage} / ${lastPage}`;
   } else {
-    pageCounter.innerText = `Page #${getPageCounter(page)}`;
+    pageCounter.innerText = `${currentPage} / ${lastPage}`;
   }
 
   return pageCounter;
