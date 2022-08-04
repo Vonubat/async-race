@@ -11,6 +11,8 @@ import { Actions, Car, CarName, Color, DrivingResult, EngineResponse, Page, Stat
 import generate100Cars from '../utilities/generate-100cars';
 import generateCarBody from '../utilities/generate-car-body';
 import { getButtonProp, getElementId } from '../utilities/get-elements';
+import getPage from '../utilities/get-page';
+
 import { setPageCounter } from '../utilities/get-set-page-counter';
 import { getOrder, setOrder, setSort } from '../utilities/get-set-sort-order';
 import updatePage from '../utilities/update-page';
@@ -189,4 +191,17 @@ export const sortOrder: (event: Event) => Promise<void> = async (event: Event): 
     getOrder() === 'ASC' ? setOrder('DESC') : setOrder('ASC');
   }
   await updatePage('Winners');
+};
+
+export const goToPage: (event: Event) => void = (event: Event): void => {
+  const id: string = getElementId(event);
+  const pageGarage: HTMLDivElement = getPage('Garage');
+  const pageWinners: HTMLDivElement = getPage('Winners');
+  if (id.includes('garage')) {
+    pageGarage.style.display = 'block';
+    pageWinners.style.display = 'none';
+  } else {
+    pageGarage.style.display = 'none';
+    pageWinners.style.display = 'block';
+  }
 };

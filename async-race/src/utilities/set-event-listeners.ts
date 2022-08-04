@@ -3,6 +3,7 @@ import {
   createCar,
   drive,
   generateCars,
+  goToPage,
   race,
   removeCar,
   reset,
@@ -119,8 +120,20 @@ export const setSortOrderListener: () => void = (): void => {
   }
 };
 
+export const setToPageBtn: () => void = (): void => {
+  const toWinnersBtn: HTMLElement | null = document.getElementById('to-winners');
+  const toGarageBtn: HTMLElement | null = document.getElementById('to-garage');
+  if (!toWinnersBtn || !toGarageBtn) {
+    throw new Error("toWinnersBtn || toGarageBtn doesn't exist");
+  } else {
+    toWinnersBtn.addEventListener('click', goToPage);
+    toGarageBtn.addEventListener('click', goToPage);
+  }
+};
+
 export const setAllEventListeners: () => void = (): void => {
   try {
+    setToPageBtn();
     setGenerateCarsBtnListener();
     setCreateCarBtnListener();
     setUpdateCarBtnListener();

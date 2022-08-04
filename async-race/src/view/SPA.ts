@@ -25,6 +25,7 @@ const generateSPA: () => Promise<HTMLElement> = async (): Promise<HTMLElement> =
   body.append(generateHeader(), generateGarage(garagePage, carResponse), generateWinners(winnersPage, winnersResponse));
   setAllEventListeners();
   disablePagination(garagePage, carResponse);
+  disablePagination(winnersPage, winnersResponse);
   return body;
 };
 
