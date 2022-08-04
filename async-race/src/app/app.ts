@@ -10,6 +10,7 @@ import updateCarAPI from '../api/update-car';
 import { Actions, Car, CarName, Color, DrivingResult, EngineResponse, Page, Status } from '../types/types';
 import generate100Cars from '../utilities/generate-100cars';
 import generateCarBody from '../utilities/generate-car-body';
+import { deleteModalWindow, generateModalWindow } from '../utilities/generate-modal-window';
 import { getButtonProp, getElementId } from '../utilities/get-elements';
 import getPage from '../utilities/get-page';
 
@@ -163,11 +164,12 @@ export const race: (event: Event) => Promise<void> = async (event: Event): Promi
   );
   Promise.any(promises)
     .then(async (value: DrivingResult | undefined) => {
-      console.log(value);
       target.classList.remove('disabled');
       target.nextElementSibling?.classList.toggle('disabled');
       const { carId, time } = value as DrivingResult;
       await saveWinnerAPI({ id: carId, time });
+      await generateModalWindow({ id: carId, time });
+      setTimeout(deleteModalWindow, 2000);
       await updatePage('Winners');
     })
     .catch((err) => {
