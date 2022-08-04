@@ -1,5 +1,5 @@
 import { Car, CarsResponse } from '../types/types';
-import createSVG from '../utilities/create-SVG';
+import { createCarSVG } from '../utilities/create-SVG';
 
 const createTrackContainer: () => HTMLDivElement = (): HTMLDivElement => {
   let trackContainer: HTMLElement | null = document.getElementById('track-container');
@@ -103,7 +103,7 @@ const generateTrack: (car: Car) => HTMLDivElement = (car: Car): HTMLDivElement =
   const carName: HTMLSpanElement = createCarName(car);
   controlsContainer.append(carManipulation, engineControl, carName);
   const trackLayout: HTMLDivElement = createTrackLayout();
-  const svg: SVGSVGElement = createSVG(car, { width: `${150}px`, height: `${60}px` });
+  const svg: SVGSVGElement = createCarSVG(car, { width: `${150}px`, height: `${60}px` });
   const finish: HTMLImageElement = createFinish(car);
   trackLayout.append(svg, finish);
   track.append(controlsContainer, trackLayout);

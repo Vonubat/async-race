@@ -1,5 +1,5 @@
 import { Order, Sort, WinnerAndCar, WinnersResponse } from '../types/types';
-import createSVG from '../utilities/create-SVG';
+import { createCarSVG } from '../utilities/create-SVG';
 import { getCurrentPage } from '../utilities/get-set-page-counter';
 
 const createTable: () => HTMLTableElement = (): HTMLTableElement => {
@@ -66,7 +66,7 @@ const generateTableRow: (value: WinnerAndCar, position: number) => HTMLTableRowE
   position: number
 ): HTMLTableRowElement => {
   const number: HTMLTableCellElement = createTD(`${position}`);
-  const SVG = createSVG(value.car, { width: `${50}px`, height: `${30}px` });
+  const SVG = createCarSVG(value.car, { width: `${50}px`, height: `${30}px` });
   const car: HTMLTableCellElement = createTD('');
   car.append(SVG);
   const name: HTMLTableCellElement = createTD(`${value.car.name}`);

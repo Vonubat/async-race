@@ -1,23 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Baloo+Thambi');
 
-body {
-  background-color: #000;
-}
-
+// #111
 .title {
-  color: #111;
+  color: maroon;
   font-size: 7rem;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Baloo Thambi', cursive;
   font-size: 50px;
-  margin-left: auto;
 }
 
 .title > span {
   text-transform: uppercase;
-  animation: glow 2s ease-in-out infinite;
+  animation: glow 2.25s ease-in-out infinite;
 }
 
 @keyframes glow {
@@ -29,7 +25,7 @@ body {
 
   10%,
   90% {
-    color: #111;
+    color: maroon;
     text-shadow: none;
   }
 }

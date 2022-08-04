@@ -1,3 +1,5 @@
+import createLink from '../utilities/create-link';
+import { createIconSVG } from '../utilities/create-SVG';
 import generateTitle from './title';
 
 const createHeader: () => HTMLElement = (): HTMLElement => {
@@ -28,11 +30,24 @@ const createBtnWinners: () => HTMLButtonElement = (): HTMLButtonElement => {
   return btnWinners;
 };
 
+const createLogoContainer: () => HTMLDivElement = (): HTMLDivElement => {
+  const logoContainer: HTMLDivElement = document.createElement('div');
+  logoContainer.classList.add('logo-container');
+  return logoContainer;
+};
+
 const generateHeader: () => HTMLElement = (): HTMLElement => {
   const header: HTMLElement = createHeader();
   const nav: HTMLElement = createNav();
-  nav.append(createBtnGarage(), createBtnWinners(), generateTitle());
-  header.append(nav);
+  const logoContainer: HTMLDivElement = createLogoContainer();
+  const linkGitHub: HTMLAnchorElement = createLink('https://github.com/Vonubat');
+  const linkRsSchool: HTMLAnchorElement = createLink('https://rs.school/');
+  logoContainer.append(linkGitHub, linkRsSchool);
+  linkGitHub.append(createIconSVG('github', { width: `${60}px`, height: `${60}px` }, '#FFFFFF'));
+  linkRsSchool.append(createIconSVG('logo-rs', { width: `${120}px`, height: `${60}px` }, '#000000'));
+
+  nav.append(createBtnGarage(), createBtnWinners());
+  header.append(nav, generateTitle(), logoContainer);
   return header;
 };
 
