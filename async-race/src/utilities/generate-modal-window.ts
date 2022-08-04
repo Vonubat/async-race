@@ -33,7 +33,7 @@ export const generateErrorModalWindow: EmptyReturnFn = (): void => {
   const body: HTMLBodyElement = document.getElementById('body') as HTMLBodyElement;
   const link: HTMLAnchorElement = createLink('https://github.com/mikhama/async-race-api#get-winners');
 
-  link.innerText = 'https://github.com/mikhama/async-race-api#get-winners';
+  link.innerText = 'https://github.com/mikhama/async-race-api';
   modalWindow.classList.add('modal');
   modalWindow.id = 'modal';
   modalWindow.innerText = `Server not found. Please, follow the instruction: `;
