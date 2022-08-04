@@ -119,11 +119,6 @@ export const controlEngine: (
   return { responseEngine, status };
 };
 
-// export const win: (carId: number, time: number) => Promise<void> = async (
-//   carId: number,
-//   time: number
-// ): Promise<void> => {};
-
 export const drive: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
   const { target, carId } = getButtonProp(event);
   const { responseEngine, status } = await controlEngine(target, carId);

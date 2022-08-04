@@ -15,7 +15,7 @@ const getElemPosition: (id: number) => { car: HTMLElement; finish: HTMLImageElem
 export const animateCar: (id: number, value: EngineResponse) => void = (id: number, value: EngineResponse): void => {
   const { car, finish } = getElemPosition(id);
   const startPoint: number = car.getBoundingClientRect().x + car.getBoundingClientRect().width / 2;
-  const endPoint: number = finish.getBoundingClientRect().x + finish.getBoundingClientRect().width / 2;
+  const endPoint: number = finish.getBoundingClientRect().x + finish.getBoundingClientRect().width / 2 - 50;
   const distance: number = endPoint - startPoint;
   const animationTime: number = value.distance / value.velocity;
   let startTimeStamp: number;

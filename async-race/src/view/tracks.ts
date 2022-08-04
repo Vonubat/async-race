@@ -25,7 +25,7 @@ const createCarName: (value: Car) => HTMLSpanElement = (value: Car): HTMLSpanEle
 const createFinish: (value: Car) => HTMLImageElement = (value: Car): HTMLImageElement => {
   const finish: HTMLImageElement = document.createElement('img');
   finish.classList.add('finish');
-  finish.src = './assets/finish.png';
+  finish.src = './assets/finish.jpg';
   finish.alt = 'checkered flag';
   finish.id = `finish-${value.id}`;
   return finish;
@@ -103,7 +103,7 @@ const generateTrack: (car: Car) => HTMLDivElement = (car: Car): HTMLDivElement =
   const carName: HTMLSpanElement = createCarName(car);
   controlsContainer.append(carManipulation, engineControl, carName);
   const trackLayout: HTMLDivElement = createTrackLayout();
-  const svg: SVGSVGElement = createSVG(car, { width: `${100}px`, height: `${50}px` });
+  const svg: SVGSVGElement = createSVG(car, { width: `${150}px`, height: `${60}px` });
   const finish: HTMLImageElement = createFinish(car);
   trackLayout.append(svg, finish);
   track.append(controlsContainer, trackLayout);

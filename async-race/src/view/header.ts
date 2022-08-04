@@ -1,3 +1,5 @@
+import generateTitle from './title';
+
 const createHeader: () => HTMLElement = (): HTMLElement => {
   const header: HTMLElement = document.createElement('header');
   header.classList.add('header');
@@ -29,7 +31,7 @@ const createBtnWinners: () => HTMLButtonElement = (): HTMLButtonElement => {
 const generateHeader: () => HTMLElement = (): HTMLElement => {
   const header: HTMLElement = createHeader();
   const nav: HTMLElement = createNav();
-  nav.append(createBtnGarage(), createBtnWinners());
+  nav.append(createBtnGarage(), createBtnWinners(), generateTitle());
   header.append(nav);
   return header;
 };

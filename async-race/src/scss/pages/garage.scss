@@ -23,7 +23,8 @@
 .track-container {
   .track {
     margin-top: 20px;
-    border-bottom: 5px dashed white;
+    border-bottom: 5px solid white;
+    border-top: 5px solid white;
 
     .controls-container {
       display: flex;
@@ -35,6 +36,7 @@
         flex-direction: column;
         width: 80px;
         gap: 5px;
+        margin: 5px 0px;
       }
     }
 
@@ -42,9 +44,7 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      .finish {
-        margin-right: 50px;
-      }
+      border-top: 5px dashed white;
     }
   }
 }
