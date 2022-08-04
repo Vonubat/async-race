@@ -2,7 +2,7 @@ import { Page, WinnersResponse } from '../types/types';
 
 import generatePageName from './page-name';
 import generatePagination from './pagination';
-import generateTable from './table';
+import { generateTable } from './table';
 
 const createWinners: () => HTMLElement = (): HTMLElement => {
   const winners: HTMLElement = document.createElement('section');

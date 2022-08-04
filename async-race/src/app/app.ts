@@ -9,8 +9,9 @@ import updateCarAPI from '../api/update-car';
 import { Actions, Car, CarName, Color, EngineResponse, Page, Status } from '../types/types';
 import generate100Cars from '../utilities/generate-100cars';
 import generateCarBody from '../utilities/generate-car-body';
-import { getButtonProp } from '../utilities/get-elements';
+import { getButtonProp, getElementId } from '../utilities/get-elements';
 import { setPageCounter } from '../utilities/get-set-page-counter';
+import { getOrder, setOrder, setSort } from '../utilities/get-set-sort-order';
 import updatePage from '../utilities/update-page';
 import { animateCar, requestIDStorage, stoppedAnimationStorage } from '../view/animation';
 
@@ -36,9 +37,8 @@ export const createCar: () => Promise<void> = async (): Promise<void> => {
 };
 
 export const selectCar: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
-  const target: HTMLButtonElement = event.target as HTMLButtonElement;
-  const id = Number(target.value);
-  const car: Car = await getCarAPI(id);
+  const { carId } = getButtonProp(event);
+  const car: Car = await getCarAPI(carId);
   const textInput: HTMLInputElement | null = document.getElementById('update-text') as HTMLInputElement | null;
   const colorInput: HTMLInputElement | null = document.getElementById('update-color') as HTMLInputElement | null;
   const updateBtn: HTMLButtonElement | null = document.getElementById('update-btn') as HTMLButtonElement | null;
@@ -48,13 +48,12 @@ export const selectCar: (event: Event) => Promise<void> = async (event: Event): 
   updateBtn.classList.remove('disabled');
   textInput.value = car.name;
   colorInput.value = car.color;
-  updateBtn.value = `${id}`;
+  updateBtn.value = `${carId}`;
   window.scrollTo(0, 0);
 };
 
 export const updateCar: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
-  const target: HTMLButtonElement = event.target as HTMLButtonElement;
-  const id = Number(target.value);
+  const { carId } = getButtonProp(event);
   const textInput: HTMLInputElement | null = document.getElementById('update-text') as HTMLInputElement | null;
   const colorInput: HTMLInputElement | null = document.getElementById('update-color') as HTMLInputElement | null;
   const updateBtn: HTMLButtonElement | null = document.getElementById('update-btn') as HTMLButtonElement | null;
@@ -63,7 +62,7 @@ export const updateCar: (event: Event) => Promise<void> = async (event: Event): 
   }
   const name: CarName = textInput.value as CarName;
   const color: Color = colorInput.value as Color;
-  await updateCarAPI(id, generateCarBody(name, color));
+  await updateCarAPI(carId, generateCarBody(name, color));
   textInput.value = '';
   colorInput.value = '#FFFFFF';
   updateBtn.value = '';
@@ -72,10 +71,9 @@ export const updateCar: (event: Event) => Promise<void> = async (event: Event): 
 };
 
 export const removeCar: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
-  const target: HTMLButtonElement = event.target as HTMLButtonElement;
-  const id = Number(target.value);
-  await deletetCarAPI(id);
-  await deleteWinner(id);
+  const { carId } = getButtonProp(event);
+  await deletetCarAPI(carId);
+  await deleteWinner(carId);
   await updatePage('Garage');
   await updatePage('Winners');
 };
@@ -101,10 +99,10 @@ export const switchPagination: (event: Event) => Promise<void> = async (event: E
 
 export const controlEngine: (
   target: HTMLButtonElement,
-  id: number
+  carId: number
 ) => Promise<{ responseEngine: EngineResponse; status: Status }> = async (
   target: HTMLButtonElement,
-  id: number
+  carId: number
 ): Promise<{ responseEngine: EngineResponse; status: Status }> => {
   let status: Status;
   if (target.classList.contains('start')) {
@@ -116,26 +114,26 @@ export const controlEngine: (
     target.classList.toggle('disabled');
     target.previousElementSibling?.classList.toggle('disabled');
   }
-  const responseEngine: EngineResponse = await controlEngineAPI(id, status);
+  const responseEngine: EngineResponse = await controlEngineAPI(carId, status);
   return { responseEngine, status };
 };
 
 export const drive: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
-  const { target, id } = getButtonProp(event);
-  const { responseEngine, status } = await controlEngine(target, id);
+  const { target, carId } = getButtonProp(event);
+  const { responseEngine, status } = await controlEngine(target, carId);
   if (status === 'started') {
-    animateCar(id, responseEngine);
-    stoppedAnimationStorage.delete(id);
-    const { success } = await driveAPI(id);
-    if (!success && !stoppedAnimationStorage.has(id)) {
-      window.cancelAnimationFrame(requestIDStorage.get(id) as number);
+    animateCar(carId, responseEngine);
+    stoppedAnimationStorage.delete(carId);
+    const { success } = await driveAPI(carId);
+    if (!success && !stoppedAnimationStorage.has(carId)) {
+      window.cancelAnimationFrame(requestIDStorage.get(carId) as number);
     }
     // if (success) {
     //   return success;
     // }
   } else {
-    animateCar(id, responseEngine);
-    stoppedAnimationStorage.set(id, id);
+    animateCar(carId, responseEngine);
+    stoppedAnimationStorage.set(carId, carId);
   }
 };
 
@@ -155,4 +153,18 @@ export const race: (event: Event) => Promise<void> = async (event: Event): Promi
 
 export const reset: () => Promise<void> = async (): Promise<void> => {
   await updatePage('Garage');
+};
+
+export const sortOrder: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
+  const id: string = getElementId(event);
+  if (id.includes('wins')) {
+    setSort('wins');
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    getOrder() === 'ASC' ? setOrder('DESC') : setOrder('ASC');
+  } else {
+    setSort('time');
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    getOrder() === 'ASC' ? setOrder('DESC') : setOrder('ASC');
+  }
+  await updatePage('Winners');
 };

@@ -137,6 +137,6 @@ export interface GenerateCarBodyFn {
 export interface GetButtonPropFn {
   (event: Event): {
     target: HTMLButtonElement;
-    id: number;
+    carId: number;
   };
 }

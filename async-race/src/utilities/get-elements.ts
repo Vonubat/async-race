@@ -4,9 +4,13 @@ export const getButtonProp: GetButtonPropFn = (
   event: Event
 ): {
   target: HTMLButtonElement;
-  id: number;
+  carId: number;
 } => {
   const target: HTMLButtonElement = event.target as HTMLButtonElement;
-  const id = Number(target.value);
-  return { target, id };
+  const carId = Number(target.value);
+  return { target, carId };
+};
+
+export const getElementId: (event: Event) => string = (event: Event): string => {
+  return (event.target as HTMLElement).id;
 };

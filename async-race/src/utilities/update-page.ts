@@ -5,13 +5,15 @@ import getWinnersAPI from '../api/get-winners';
 import { CarsResponse, Page, WinnersResponse } from '../types/types';
 import generatePageCounter from '../view/page-counter';
 import generatePageName from '../view/page-name';
-import generateTable from '../view/table';
+import { generateTable, updateSortOrderIndicator } from '../view/table';
 import generateAllTracks from '../view/tracks';
 import disablePagination from './disable-pagination';
 import { getCurrentPage } from './get-set-page-counter';
+import { getOrder, getSort } from './get-set-sort-order';
 import {
   setRemoveCarBtnsListener,
   setSelectCarBtnsListener,
+  setSortOrderListener,
   setStartBtnListener,
   setStopBtnListener,
 } from './set-event-listeners';
@@ -25,8 +27,8 @@ const updatePage: (page: Page) => Promise<CarsResponse | WinnersResponse> = asyn
   } else {
     response = await getWinnersAPI({
       pageNumber: getCurrentPage(page),
-      sort: 'id',
-      order: 'ASC',
+      sort: getSort(),
+      order: getOrder(),
     });
   }
   try {
@@ -42,6 +44,8 @@ const updatePage: (page: Page) => Promise<CarsResponse | WinnersResponse> = asyn
       setStopBtnListener();
     } else {
       placeForElement?.after(generateTable(response as WinnersResponse));
+      setSortOrderListener();
+      updateSortOrderIndicator(getSort(), getOrder());
     }
     return response;
   } catch (error) {

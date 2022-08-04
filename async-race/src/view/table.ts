@@ -1,4 +1,4 @@
-import { WinnerAndCar, WinnersResponse } from '../types/types';
+import { Order, Sort, WinnerAndCar, WinnersResponse } from '../types/types';
 import createSVG from '../utilities/create-SVG';
 import { getCurrentPage } from '../utilities/get-set-page-counter';
 
@@ -28,10 +28,17 @@ const createTR: (value: string) => HTMLTableRowElement = (value: string): HTMLTa
   return tr;
 };
 
-const createTH: (value: string) => HTMLTableCellElement = (value: string): HTMLTableCellElement => {
+const createTH: (value: string, cssClass?: string) => HTMLTableCellElement = (
+  value: string,
+  cssClass?: string
+): HTMLTableCellElement => {
   const th: HTMLTableCellElement = document.createElement('th');
   th.classList.add('th');
-  th.innerText = value;
+  if (cssClass !== undefined) {
+    th.classList.add(cssClass);
+    th.id = cssClass;
+  }
+  th.innerHTML = value;
   return th;
 };
 
@@ -46,8 +53,8 @@ const generateTableHead: () => HTMLTableRowElement = (): HTMLTableRowElement => 
   const number: HTMLTableCellElement = createTH('Number');
   const car: HTMLTableCellElement = createTH('Car');
   const name: HTMLTableCellElement = createTH('Name');
-  const wins: HTMLTableCellElement = createTH('Wins');
-  const bestTime: HTMLTableCellElement = createTH('Best time (s)');
+  const wins: HTMLTableCellElement = createTH('Wins', 'wins');
+  const bestTime: HTMLTableCellElement = createTH('Best time (s)', 'best-time');
   const tr: HTMLTableRowElement = createTR('table-head');
   tr.append(number, car, name, wins, bestTime);
 
@@ -71,7 +78,9 @@ const generateTableRow: (value: WinnerAndCar, position: number) => HTMLTableRowE
   return tr;
 };
 
-const generateTable: (value: WinnersResponse) => HTMLTableElement = (value: WinnersResponse): HTMLTableElement => {
+export const generateTable: (value: WinnersResponse) => HTMLTableElement = (
+  value: WinnersResponse
+): HTMLTableElement => {
   const position: (currentValue: number) => number = (currentValue: number): number =>
     (getCurrentPage('Winners') - 1) * 10 + currentValue + 1;
 
@@ -87,4 +96,20 @@ const generateTable: (value: WinnersResponse) => HTMLTableElement = (value: Winn
   return table;
 };
 
-export default generateTable;
+export const updateSortOrderIndicator: (sort: Sort, order: Order) => void = (sort: Sort, order: Order): void => {
+  const wins: HTMLTableCellElement = document.getElementById('wins') as HTMLTableCellElement;
+  const bestTime: HTMLTableCellElement = document.getElementById('best-time') as HTMLTableCellElement;
+  const arrowDown = '&#9660';
+  const arrowUp = '&#9650';
+  if (sort === 'wins') {
+    if (order === 'DESC') {
+      wins.innerHTML = `Wins ${arrowDown}`;
+    } else {
+      wins.innerHTML = `Wins ${arrowUp}`;
+    }
+  } else if (order === 'DESC') {
+    bestTime.innerHTML = `Best time (s) ${arrowDown}`;
+  } else {
+    bestTime.innerHTML = `Best time (s) ${arrowUp}`;
+  }
+};

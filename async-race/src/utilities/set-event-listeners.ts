@@ -7,6 +7,7 @@ import {
   removeCar,
   reset,
   selectCar,
+  sortOrder,
   switchPagination,
   updateCar,
 } from '../app/app';
@@ -62,7 +63,7 @@ export const setPaginationListener: () => void = (): void => {
   const prevBtnGarage: HTMLElement | null = document.getElementById('btn-prev-garage');
   const prevBtnWinners: HTMLElement | null = document.getElementById('btn-prev-winners');
   if (!nextBtnGarage || !nextBtnWinners || !prevBtnGarage || !prevBtnWinners) {
-    throw new Error("NextBtnGarage || nextBtnWinners  doesn't exist");
+    throw new Error("nextBtnGarage || nextBtnWinners || prevBtnGarage || prevBtnWinners doesn't exist");
   } else {
     nextBtnGarage.addEventListener('click', switchPagination);
     nextBtnWinners.addEventListener('click', switchPagination);
@@ -107,6 +108,17 @@ export const setResetBtnListener: () => void = (): void => {
   }
 };
 
+export const setSortOrderListener: () => void = (): void => {
+  const winBtn: HTMLElement | null = document.getElementById('wins');
+  const bestTimeBtn: HTMLElement | null = document.getElementById('best-time');
+  if (!winBtn || !bestTimeBtn) {
+    throw new Error("winBtn || bestTimeBtn doesn't exist");
+  } else {
+    winBtn.addEventListener('click', sortOrder);
+    bestTimeBtn.addEventListener('click', sortOrder);
+  }
+};
+
 export const setAllEventListeners: () => void = (): void => {
   try {
     setGenerateCarsBtnListener();
@@ -119,7 +131,9 @@ export const setAllEventListeners: () => void = (): void => {
     setRemoveCarBtnsListener();
     setStartBtnListener();
     setStopBtnListener();
+    setSortOrderListener();
   } catch (error) {
     console.log('json data is empty');
+    console.log(error);
   }
 };

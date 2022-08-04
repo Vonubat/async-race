@@ -10,6 +10,18 @@
   border-spacing: 0px;
   border-radius: 3px;
 
+  .wins:hover,
+  .best-time:hover {
+    cursor: pointer;
+    color: greenyellow;
+    user-select: none;
+  }
+
+  .wins:active,
+  .best-time:active {
+    transform: scale(95%);
+  }
+
   .th {
     background-color: maroon;
     padding: 5px;

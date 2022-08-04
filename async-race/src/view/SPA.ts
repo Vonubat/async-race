@@ -2,6 +2,7 @@ import getCarsAPI from '../api/get-cars';
 import getWinnersAPI from '../api/get-winners';
 import { CarsResponse, Page, WinnersResponse } from '../types/types';
 import disablePagination from '../utilities/disable-pagination';
+import { getOrder, getSort } from '../utilities/get-set-sort-order';
 import { setAllEventListeners } from '../utilities/set-event-listeners';
 import generateGarage from './garage';
 import generateHeader from './header';
@@ -16,7 +17,11 @@ const generateSPA: () => Promise<HTMLElement> = async (): Promise<HTMLElement> =
   const garagePage: Page = 'Garage';
   const winnersPage: Page = 'Winners';
   const carResponse: CarsResponse = await getCarsAPI(startPage);
-  const winnersResponse: WinnersResponse = await getWinnersAPI({ pageNumber: startPage, sort: 'id', order: 'ASC' });
+  const winnersResponse: WinnersResponse = await getWinnersAPI({
+    pageNumber: startPage,
+    sort: getSort(),
+    order: getOrder(),
+  });
   body.append(generateHeader(), generateGarage(garagePage, carResponse), generateWinners(winnersPage, winnersResponse));
   setAllEventListeners();
   disablePagination(garagePage, carResponse);
