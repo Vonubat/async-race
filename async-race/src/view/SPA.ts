@@ -2,6 +2,7 @@ import getCarsAPI from '../api/get-cars';
 import getWinnersAPI from '../api/get-winners';
 import { CarsResponse, Page, WinnersResponse } from '../types/types';
 import disablePagination from '../utilities/disable-pagination';
+import { generateErrorModalWindow } from '../utilities/generate-modal-window';
 import { getOrder, getSort } from '../utilities/get-set-sort-order';
 import { setAllEventListeners } from '../utilities/set-event-listeners';
 import generateGarage from './garage';
@@ -16,16 +17,26 @@ const generateSPA: () => Promise<HTMLElement> = async (): Promise<HTMLElement> =
   const startPage = 1;
   const garagePage: Page = 'Garage';
   const winnersPage: Page = 'Winners';
-  const carResponse: CarsResponse = await getCarsAPI(startPage);
-  const winnersResponse: WinnersResponse = await getWinnersAPI({
-    pageNumber: startPage,
-    sort: getSort(),
-    order: getOrder(),
-  });
-  body.append(generateHeader(), generateGarage(garagePage, carResponse), generateWinners(winnersPage, winnersResponse));
-  setAllEventListeners();
-  disablePagination(garagePage, carResponse);
-  disablePagination(winnersPage, winnersResponse);
+  let carResponse: CarsResponse;
+  let winnersResponse: WinnersResponse;
+  try {
+    carResponse = await getCarsAPI(startPage);
+    winnersResponse = await getWinnersAPI({
+      pageNumber: startPage,
+      sort: getSort(),
+      order: getOrder(),
+    });
+    body.append(
+      generateHeader(),
+      generateGarage(garagePage, carResponse),
+      generateWinners(winnersPage, winnersResponse)
+    );
+    setAllEventListeners();
+    disablePagination(garagePage, carResponse);
+    disablePagination(winnersPage, winnersResponse);
+  } catch (error) {
+    generateErrorModalWindow();
+  }
   return body;
 };
 
