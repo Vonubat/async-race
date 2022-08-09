@@ -31,7 +31,7 @@ export const deleteModalWindow: EmptyReturnFn = (): void => {
 export const generateErrorModalWindow: EmptyReturnFn = (): void => {
   const modalWindow: HTMLDivElement = document.createElement('div');
   const body: HTMLBodyElement = document.getElementById('body') as HTMLBodyElement;
-  const link: HTMLAnchorElement = createLink('https://github.com/mikhama/async-race-api#get-winners');
+  const link: HTMLAnchorElement = createLink('https://github.com/mikhama/async-race-api');
 
   link.innerText = 'https://github.com/mikhama/async-race-api';
   modalWindow.classList.add('modal');
