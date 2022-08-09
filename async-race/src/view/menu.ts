@@ -24,30 +24,6 @@ const createRaceControls: () => HTMLDivElement = (): HTMLDivElement => {
   return raceControls;
 };
 
-const createBtnRace: () => HTMLButtonElement = (): HTMLButtonElement => {
-  const btnRace: HTMLButtonElement = document.createElement('button');
-  btnRace.classList.add('button');
-  btnRace.id = 'race';
-  btnRace.innerText = 'RACE';
-  return btnRace;
-};
-
-const createBtnReset: () => HTMLButtonElement = (): HTMLButtonElement => {
-  const btnReset: HTMLButtonElement = document.createElement('button');
-  btnReset.classList.add('button');
-  btnReset.id = 'reset';
-  btnReset.innerText = 'RESET';
-  return btnReset;
-};
-
-const createBtnGenerateCars: () => HTMLButtonElement = (): HTMLButtonElement => {
-  const btnGenerateCars: HTMLButtonElement = document.createElement('button');
-  btnGenerateCars.classList.add('button');
-  btnGenerateCars.id = 'genererate-cars';
-  btnGenerateCars.innerText = 'GENERATE CARS';
-  return btnGenerateCars;
-};
-
 const createInputCreateText: () => HTMLInputElement = (): HTMLInputElement => {
   const inputCreateText: HTMLInputElement = document.createElement('input');
   inputCreateText.classList.add('create-text');
@@ -91,7 +67,11 @@ const generateMenu: () => HTMLDivElement = (): HTMLDivElement => {
   const updateCar: HTMLDivElement = createUpdateCar();
   updateCar.append(createInputUpdateText(), createInputUpdateColor(), createBtn('update-btn', 'UPDATE', true));
   const raceControls: HTMLDivElement = createRaceControls();
-  raceControls.append(createBtnRace(), createBtnReset(), createBtnGenerateCars());
+  raceControls.append(
+    createBtn('race', 'RACE'),
+    createBtn('reset', 'RESET', true),
+    createBtn('genererate-cars', 'GENERATE CARS')
+  );
   menu.append(createCar, updateCar, raceControls);
   return menu;
 };

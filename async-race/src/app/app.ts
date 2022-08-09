@@ -134,7 +134,6 @@ export const race: (event: Event) => Promise<void> = async (event: Event): Promi
   await updatePage('Garage');
   const target: HTMLButtonElement = event.target as HTMLButtonElement;
   target.classList.add('disabled');
-  target.nextElementSibling?.classList.toggle('disabled');
 
   const members: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.start');
   const promises: Promise<DrivingResult | undefined>[] = Array.from(members).map(
@@ -157,7 +156,6 @@ export const race: (event: Event) => Promise<void> = async (event: Event): Promi
   Promise.any(promises)
     .then(
       async (value: DrivingResult | undefined): Promise<void> => {
-        target.classList.remove('disabled');
         target.nextElementSibling?.classList.toggle('disabled');
         const { carId, time } = value as DrivingResult;
         await saveWinnerAPI({ id: carId, time });
@@ -166,12 +164,17 @@ export const race: (event: Event) => Promise<void> = async (event: Event): Promi
         await updatePage('Winners');
       }
     )
-    .catch((err: Error): void => {
-      console.log(`${err} => all cars broken`);
+    .catch((): void => {
+      target.nextElementSibling?.classList.toggle('disabled');
+      console.log(`All cars broken`);
     });
 };
 
-export const reset: EmptyPromiseReturnFn = async (): Promise<void> => {
+export const reset: (event: Event) => Promise<void> = async (event: Event): Promise<void> => {
+  const target: HTMLButtonElement = event.target as HTMLButtonElement;
+  target.classList.add('disabled');
+  target.previousElementSibling?.classList.toggle('disabled');
+
   await updatePage('Garage');
 };
 
