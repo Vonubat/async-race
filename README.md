@@ -1,4 +1,4 @@
-## Screenshoot
+## Screenshot
 
 <a href="https://ibb.co/k32nC1b"><img src="https://i.ibb.co/cbh5nLf/image.png" alt="image" border="0"></a>
 
