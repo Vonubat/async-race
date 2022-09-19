@@ -7,10 +7,12 @@ import { getOrder, getSort } from '../utilities/get-set-sort-order';
 import { setAllEventListeners } from '../utilities/set-event-listeners';
 import generateGarage from './garage';
 import generateHeader from './header';
+import { turnOffLoadingAnimation, turnOnLoadingAnimation } from './loading';
 import generateWinners from './winners';
 
 const generateSPA: () => Promise<HTMLElement> = async (): Promise<HTMLElement> => {
   const body: HTMLElement | null = document.getElementById('body');
+  turnOnLoadingAnimation();
 
   if (!body) {
     throw new Error("body doesn't exist");
@@ -41,6 +43,7 @@ const generateSPA: () => Promise<HTMLElement> = async (): Promise<HTMLElement> =
     generateErrorModalWindow();
   }
 
+  turnOffLoadingAnimation();
   return body;
 };
 
