@@ -4,6 +4,12 @@
 
 **Async Race** - Race Game SPA. App has back-end(API) and front-end(managing the collection of the cars, operating its engines, and showing races statistics)
 
+## Important note
+
+**Web Services on the free plan are automatically spun down after 15 minutes of inactivity. When a new request for a free service comes in, Render spins it up again so it can process the request.**
+
+**This can cause a response delay of up to 30 seconds for the first request that comes in after a period of inactivity.**
+
 ## Key skills
 
 - Communication with a server (fetch, REST API)
