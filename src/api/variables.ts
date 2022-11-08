@@ -1,4 +1,4 @@
-export const BASE = 'https://async-race-server-json.herokuapp.com'; // Api for Async-Race (on Heroku)
+export const BASE = 'https://async-race.adaptable.app/'; // Api for Async-Race
 export const GARAGE = `${BASE}/garage`;
 export const WINNERS = `${BASE}/winners`;
 export const ENGINE = `${BASE}/engine`;
